@@ -17,5 +17,9 @@ app.use(bodyparse.urlencoded());
     otpService.generate_veryfy_code(userPhone);
 });
 
+rout.get('/',(req, res, next) =>{
+    res.send("Hello World");
+});
+
 
 module.exports = rout;
