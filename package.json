@@ -9,7 +9,8 @@
   "author": "Mohamed Monir Shabana",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "mongoose": "^5.9.25"
   },
   "devDependencies": {
     "typescript": "^3.9.7"
