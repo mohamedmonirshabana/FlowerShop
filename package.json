@@ -14,7 +14,5 @@
     "make-random": "^1.2.1",
     "mongoose": "^5.9.25"
   },
-  "devDependencies": {
-    "typescript": "^3.9.7"
-  }
+  "devDependencies": {}
 }

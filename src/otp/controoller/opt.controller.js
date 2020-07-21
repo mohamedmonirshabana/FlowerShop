@@ -2,7 +2,6 @@ const express = require('express');
 const bodyparse = require('body-parser');
 const { OTPService } = require('../service/otp.service');
 
-const otpService = new OTPService();
 const app = express();
 const rout = express.Router();
 

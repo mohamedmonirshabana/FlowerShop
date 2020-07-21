@@ -5,27 +5,28 @@ const { otpSchema, otpModel } = require('../schema/otp.schema');
 
 
 const app = express();
-const router = express.router();
+const router = express.Router();
 
 router.get('/signin',(req, res, next) =>{
     
 });
 
-export class OTPService{
+class OTPService{
     constructor(){
         const _otpModel =  otpModel; 
     }
 
-     Search_for_phone(phoneNumber){
+    static Search_for_phone(phoneNumber){
         return this._otpModel.findOne({phone: phoneNumber});
     }
 
-    generate_veryfy_code(phoneNumber){
+ static generate_veryfy_code(phoneNumber){
         let ri =  random(9999);
         this._otpModel.create({phone: phoneNumber, veryfyCode: ri});
     }
 
-    veryfy_phone_Number(phoneNumber, veryfy){
+   static veryfy_phone_Number(phoneNumber, veryfy){
         return this._otpModel.findOne({phone: phoneNumber, veryfyCode:veryfy});
     }
 }
+module.exports = OTPService;
