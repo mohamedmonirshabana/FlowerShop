@@ -2,7 +2,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyparse = require("body-parser")
 //import { rout } from './otp/controoller/opt.controller';
-const rout = require('./otp/controoller/opt.controller');
+const otpRout = require('./otp/controoller/opt.controller');
+
+const generalRoutes = require('./route');
 
 const app = express();
 
@@ -15,7 +17,10 @@ mongoose.connect('mongodb://localhost:27017/flowerShop');
 
 const port = 3000;
 
-app.use(rout);
+app.use(generalRoutes);
+
+// app.use(otpRout);
+
 // app.get('/signup',(req, res, next)=>{
 
 // });

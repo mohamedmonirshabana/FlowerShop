@@ -6,7 +6,7 @@ let RandomInteger = require('random-multiple-integers');
 
 const otpModel= require("../schema/otp.schema");
 
-const rout = express.Router();
+const otpRout = express.Router();
 
 async function Search_for_phone(phoneNumber){
     return otpModel.findOne({phone: phoneNumber});
@@ -51,7 +51,7 @@ async function VeryFyed_phone(phoneNumber, veryfynum){
 // }
 
 
- rout.post('/veryfycode', async (req, res) =>{
+ otpRout.post('/veryfycode', async (req, res) =>{
     const Test_phone_exist =  await Search_for_phone(req.body.phone);
     console.log(Test_phone_exist);
     if(Test_phone_exist === null){
@@ -64,14 +64,17 @@ async function VeryFyed_phone(phoneNumber, veryfynum){
     res.send("end");
 });
 
-rout.post('/veryFyed', async (req, res, next) =>{
+otpRout.post('/veryFyed', async (req, res, next) =>{
     const phoneNum = req.body.phone;
     const veryfy = req.body.veryfy;
     await VeryFyed_phone(phoneNum, veryfy);
     res.send("end");
 });
 
+otpRout.get('/mse',(req, res)=>{
+    res.send("Test");
+});
 
 
 
-module.exports = rout;
+module.exports = otpRout;
