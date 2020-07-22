@@ -3,8 +3,9 @@ const Schema = mongoose.Schema;
 const { OTP_MODEL_NAME } = require('../../../common/constants');
 
  const otpSchema = new Schema({
-    phone: {type: Number, required: true},
-    veryfycode: {type: Number, required: true}
+    phone: {type: String, required: true},
+    veryfycode: {type: Number, required: true},
+    veryfy: {type: Boolean, required: true, default: false}
 }); 
 
  const otpModel = mongoose.model("OTP_MODEL_NAME", otpSchema);
