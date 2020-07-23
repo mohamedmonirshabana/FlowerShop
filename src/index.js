@@ -6,7 +6,10 @@ const otpRout = require('./otp/controoller/opt.controller');
 
 const generalRoutes = require('./route');
 
+const jwt = require('express-jwt');
+
 const app = express();
+
 
 
 app.use(bodyparse.urlencoded({urlencoded:false}));
