@@ -94,36 +94,50 @@ async function update_user_data(usermail){
 }
 
 
-userRoute.post('/signup', async (req, res) =>{
-    const pas  = req.body.password;
+
+userRoute.post('/signup', async (req, res , next) =>{
+    //const pas  = req.body.password;
     let passhash = bcrypt.hashSync(req.body.password, 10);
     const username = req.body.username;
     const email = req.body.email;
     const phone = req.body.phone;
    
-   if(email == ""){
-       const check_by_phone = CheckifuserExist_by_phone(phone);
-       if(check_by_phone){
-           throw new Error();
-       }
-   }else if(phone == ""){
-       const Check_by_Email = CheckifuserExist_by_Email(email);
-        if(Check_by_Email){
-            throw new Error();
+    const check_by_phone = CheckifuserExist_by_phone(phone);
+    console.log("check for phone "+ check_by_phone);
+    if(!check_by_phone){
+        const phone_result = await  check_phone_on_DB(phone);
+        
+        if(phone_result){
+            await Add_user_on_DB(username, email, phone , passhash );
+            const token = await  generate_Access_Token({username: req.body.username});
+            res.json({  username: req.body.username, email: req.body.email, phone: req.body.phone  , token: token } );  
+        }else{
+            next();
         }
-   }
-    const phone_result = await  check_phone_on_DB(phone);
-    let message; 
-    if(phone_result){
-        console.log(`name ${username} email ${email} phone ${phone} password ${req.body.password} passhash ${passhash}`);
-        console.log("if you found "+ process.env.TOKEN_SECRET);
-         await Add_user_on_DB(username, email, phone , passhash );
-         
-         const token = await  generate_Access_Token({username: req.body.username});
-         res.json({  username: req.body.username, email: req.body.email, phone: req.body.phone  , token: token } );  
-    }else{
-        res.status(401);
     }
+
+//    if(email == ""){
+//        const check_by_phone = CheckifuserExist_by_phone(phone);
+//        console.log("check for phone "+ check_by_phone);
+//        if(!check_by_phone){
+//            throw new Error("Phone is exist ");
+//        }
+//    }else if(phone == ""){
+//        const Check_by_Email = CheckifuserExist_by_Email(email);
+//         if(!Check_by_Email){
+//             throw new Error("Email is exist ");
+//         }
+//    }
+    
+//     const phone_result = await  check_phone_on_DB(phone);
+//     let message; 
+//     if(phone_result){
+//          await Add_user_on_DB(username, email, phone , passhash );
+//          const token = await  generate_Access_Token({username: req.body.username});
+//          res.json({  username: req.body.username, email: req.body.email, phone: req.body.phone  , token: token } );  
+//     }else{
+//         res.status(401);
+//     }
 });
 
 userRoute.post('/singin', async (req, res, next) =>{
