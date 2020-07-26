@@ -18,7 +18,7 @@ flowerRouter.post('/upload',upload.single("myfile")  , (req, res, next) =>{
     }
     //res.send(file);
 
-    const path =  req.protocol +"://"+ req.get("host")+"/tmp/my-upload/"+file.filename;
+    const path =  req.protocol +"://"+ req.get("host")+"/uploads/"+file.filename;
     const flowerphoto = file.path.toString();
      flowerModel.create({flowername: flowerName, flowerphoto: path , price: price, description: description});
     res.send("File Create ");
