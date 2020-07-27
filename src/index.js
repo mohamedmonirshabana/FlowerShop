@@ -14,8 +14,10 @@ app.use(bodyparse.urlencoded({urlencoded:false}));
 app.use(bodyparse.json());
 
 const public  =path.resolve("uploads");
+const profile = path.resolve("profile");
 
  app.use("/uploads", express.static(public));
+ app.use("/profile", express.static(profile));
 
 // app.use( '/public',express.static( __dirname + "/public")); //Sucess Code
 

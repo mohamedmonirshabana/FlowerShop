@@ -6,6 +6,8 @@ const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 const { json } = require('body-parser');
 const validator = require("email-syntax-validator");
+const  uploadProfile = require('../../uploadProfile');
+const multer = require('multer');
 
 dotenv.config();
 
@@ -51,8 +53,9 @@ dotenv.config();
     }
 
 
-  function Add_user_on_DB(userName, userEmail, phoneNumber, pass){
-     userModel.create({name: userName, email: userEmail, phone: phoneNumber, password: pass});
+  function Add_user_on_DB(userName, userEmail, phoneNumber, pass, profile){
+      
+     userModel.create({name: userName, email: userEmail, phone: phoneNumber, password: pass,profilepics: profile});
 }
 
 const app = express();
@@ -95,7 +98,8 @@ async function update_user_data(usermail){
 
 
 
-userRoute.post('/signup', async (req, res , next) =>{
+userRoute.post('/signup', uploadProfile.single("profile") ,async (req, res , next) =>{
+    const profileimage = req.file;
     //const pas  = req.body.password;
     let passhash = bcrypt.hashSync(req.body.password, 10);
     const username = req.body.username;
@@ -104,11 +108,17 @@ userRoute.post('/signup', async (req, res , next) =>{
    
     const check_by_phone = CheckifuserExist_by_phone(phone);
     console.log("check for phone "+ check_by_phone);
-    if(!check_by_phone){
+    if(check_by_phone){
         const phone_result = await  check_phone_on_DB(phone);
-        
         if(phone_result){
-            await Add_user_on_DB(username, email, phone , passhash );
+            if(!profileimage){
+                const error = new Error("Please upload Profile");
+                error.httpStatusCode = 400;
+                throw error("Shhhhhhhhhhhhhhhh");
+            }
+            console.log("arrive to image");
+            const profPath = req.protocol+"://"+req.get("host")+"/profiles/"+profileimage.filename;
+            await Add_user_on_DB(username, email, phone , passhash, profPath );
             const token = await  generate_Access_Token({username: req.body.username});
             res.json({  username: req.body.username, email: req.body.email, phone: req.body.phone  , token: token } );  
         }else{

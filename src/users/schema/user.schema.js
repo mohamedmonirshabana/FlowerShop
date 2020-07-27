@@ -7,7 +7,8 @@ const userSchema = new Schema({
     name:{type: String, required:true},
     email:{type: String, required: false},
     phone: {type: String, required: true},
-    password:{type:String, required: true}
+    password:{type:String, required: true},
+    profilepics:{type: String, required: true}
 });
 
 const userModel = Mongoose.model("USER_MODEL_NAME", userSchema);

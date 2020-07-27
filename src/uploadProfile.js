@@ -5,7 +5,7 @@ const path = require('path');
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) =>{
-        cb(null,path.resolve("uploads"));
+        cb(null,path.resolve("profiles"));
     },
     filename:(req,file,cb)=>{
         const uniqueSuffix = Date.now() + '-'+Math.round(Math.random() * 1E9 );
@@ -14,9 +14,8 @@ const storage = multer.diskStorage({
     }
     });
 
- const upload = multer({storage: storage });
+ const uploadProfile = multer({storage: storage });
 
 
 
-module.exports = upload;
-
+module.exports = uploadProfile;
