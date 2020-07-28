@@ -171,11 +171,15 @@ userRoute.post('/singin', async (req, res, next) =>{
     }
 });
 
- userRoute.post('/update/:uid', authenticateToken , async  (req, res) =>{
+ userRoute.patch('/update/:uid', authenticateToken,uploadProfile.single("profilepics") , async  (req, res) =>{
     const name = req.body.username;
     const email = req.body.email;
+    const profilepics = req.file;
+    console.log(profilepics);
     if(validator.validate(email)){
-          const userEdit = await userModel.findByIdAndUpdate({_id: req.params.uid},{email: email, name: name});
+        const profPath = req.protocol+"://"+req.get("host")+"/profiles/"+profilepics.filename;
+
+          const userEdit = await userModel.findByIdAndUpdate({_id: req.params.uid},{email: email, name: name, profilepics : profPath});
         res.send("End of update");
     }else{
         res.status(401);

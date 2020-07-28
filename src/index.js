@@ -14,10 +14,10 @@ app.use(bodyparse.urlencoded({urlencoded:false}));
 app.use(bodyparse.json());
 
 const public  =path.resolve("uploads");
-const profile = path.resolve("profile");
+const profile = path.resolve("profiles");
 
  app.use("/uploads", express.static(public));
- app.use("/profile", express.static(profile));
+ app.use("/profiles", express.static(profile));
 
 // app.use( '/public',express.static( __dirname + "/public")); //Sucess Code
 
@@ -30,4 +30,5 @@ app.use(generalRoutes);
 
 app.listen(port, () =>{
     console.log("App is working on "+port);
+    console.log(path.resolve("uploads"));
 });

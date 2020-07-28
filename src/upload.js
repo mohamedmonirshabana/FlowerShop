@@ -14,9 +14,14 @@ const storage = multer.diskStorage({
     }
     });
 
- const upload = multer({storage: storage });
+    // const profile = path.resolve("profiles");
+    // const FlowerPath = path.resolve("uploads"); 
 
+const upload = multer({storage:storage});
+
+//  const upload = multer({storage: storage, dest:__dirname+"/uploads"});
 
 
 module.exports = upload;
+// module.exports = uploadProfile;
 

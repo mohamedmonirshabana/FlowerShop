@@ -1,14 +1,14 @@
 const express = require('express');
 const multer = require('multer');
-const upload = require('../../upload');
+const uploadFLower= require('../../upload');
 const flowerModel = require('../Schema/Flower.Schema');
+const path = require("path");
 
 
 const flowerRouter = express.Router();
+     
 
-
-
-flowerRouter.post('/upload',upload.single("myfile")  , (req, res, next) =>{
+flowerRouter.post('/upload',uploadFLower.single("myfile"), (req, res, next) =>{
     const flowerName = req.body.flowerName;
     const price = parseFloat(req.body.price);
     const description = req.body.desc;
