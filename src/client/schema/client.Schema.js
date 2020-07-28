@@ -4,7 +4,7 @@ const {CLIENT_MODEL_NAME} = require('../../../common/constants');
 const { schema } = require("../../otp/schema/otp.schema");
 
 const clientSchema = new Schema({
-    notification:{type:Boolean, required: true},
+    notification:{type:Boolean, required: true, default: true},
     clientID: {type: String, required: true}
 
 });

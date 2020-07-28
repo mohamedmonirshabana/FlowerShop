@@ -8,10 +8,13 @@ const generalRoutes = require('./route');
 
 const jwt = require('express-jwt');
 
+const multer = require('multer');
+
 const app = express();
 
 app.use(bodyparse.urlencoded({urlencoded:false}));
 app.use(bodyparse.json());
+
 
 const public  =path.resolve("uploads");
 const profile = path.resolve("profiles");
@@ -30,5 +33,4 @@ app.use(generalRoutes);
 
 app.listen(port, () =>{
     console.log("App is working on "+port);
-    console.log(path.resolve("uploads"));
 });

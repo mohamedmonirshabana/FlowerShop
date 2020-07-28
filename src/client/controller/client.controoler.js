@@ -6,9 +6,7 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-async function generate_Access_token(username){
-    return await jwt.sign(username, process.env.to.TOKEN_SECRET, {expiresIn:'18000s'});
-}
+
 
 function authenticateToken(req, res, next){
     const authHeader = req.headers['authorization'];
@@ -40,14 +38,14 @@ async function check_if_client_exist(userID){
     return result;
 }
 
-clientRout.post('/addclient', retrurnUserID ,async (req, res, next)=>{
+clientRout.post('/addclient', authenticateToken , retrurnUserID ,async (req, res, next)=>{
     console.log("hello");
     const loginId = req.userId;
     console.log("user id is "+ loginId);
     const checkuser = check_if_client_exist(loginId);
     console.log("result is "+ checkuser);
     if(!checkuser){
-    const clientAdded = await clientModel.create({ notification: true, clientID: loginId });
+    const clientAdded = await clientModel.create({ clientID: loginId });
     res.send(clientAdded._id);
     }
     res.send("Your ID is Exist");
