@@ -7,7 +7,13 @@ const dotenv = require('dotenv');
 const { json } = require('body-parser');
 const validator = require("email-syntax-validator");
 const  uploadProfile = require('../../uploadProfile');
-const multer = require('multer');
+// const { authenticateToken, generate_Access_Token } = require('../../Auth/Authentication.Auth');
+
+// const multer = require('multer');
+
+const multerService = require('../../utils/multer.service');
+
+const upload = multerService("uploads");
 
 dotenv.config();
 
@@ -98,7 +104,7 @@ async function update_user_data(usermail){
 
 
 
-userRoute.post('/signup', uploadProfile.single("profile") ,async (req, res , next) =>{
+userRoute.post('/signup', upload.single("profile") ,async (req, res , next) =>{
     const profileimage = req.file;
     //const pas  = req.body.password;
     let passhash = bcrypt.hashSync(req.body.password, 10);
@@ -171,7 +177,7 @@ userRoute.post('/singin', async (req, res, next) =>{
     }
 });
 
- userRoute.patch('/update/:uid', authenticateToken,uploadProfile.single("profilepics") , async  (req, res) =>{
+ userRoute.patch('/update/:uid', authenticateToken,upload.single("profilepics") , async  (req, res) =>{
     const name = req.body.username;
     const email = req.body.email;
     const profilepics = req.file;

@@ -7,15 +7,15 @@ const dotenv = require("dotenv");
 const providerRoute = express.Router();
 //const upload = require("../../upload");
 
-var uploadArr = multer({ dest: 'uploads/' })
+// var uploadArr = multer({ dest: 'uploads/' });
 
 const multerService = require('../../utils/multer.service');
 
 
 // const app = express();
 
-const upload = multerService(path.resolve('uploads'));
-const manyupload = multerService(path.resolve("providerFile/IDImages"));
+const upload = multerService('uploads');
+// const manyupload = multerService(path.resolve("providerFile/IDImages"));
 
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization'];
