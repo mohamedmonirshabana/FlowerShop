@@ -4,13 +4,23 @@ const bodyparse = require("body-parser");
 const path = require('path');
 const otpRout = require('./otp/controoller/opt.controller');
 
+
 const generalRoutes = require('./route');
 
 const jwt = require('express-jwt');
 
 const multer = require('multer');
 
+// const {Deepstream} = require("@deepstream/client");
+// const { Deepstream } = require('@deepstream/server');
+// const server = new Deepstream('./config');
+// server.start();
+
 const app = express();
+
+// const deepstream = new Deepstream();
+// const client = deepstream('localhost:6020').login();
+
 
 app.use(bodyparse.urlencoded({urlencoded:false}));
 app.use(bodyparse.json());

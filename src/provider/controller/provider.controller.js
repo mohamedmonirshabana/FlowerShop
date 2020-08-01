@@ -16,6 +16,22 @@ const multerService = require('../../utils/multer.service');
 
 const upload = multerService('uploads');
 // const manyupload = multerService(path.resolve("providerFile/IDImages"));
+// const {deepstream} = require('@deepstream/server');
+// const ds = require('@deepstream/client');
+
+// const server = new deepstream();
+// server.start();
+// const client = server('localhost:6020').login();
+// const pic = ds.record.getRecord('driver/14');
+
+// pic.set({
+//     name:"jj"
+// });
+
+// pic.subscribe((data) =>{});
+// pic.event.emit('sisn',{name:'big'});
+
+
 
 function authenticateToken(req, res, next) {
     const authHeader = req.headers['authorization'];

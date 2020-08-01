@@ -6,6 +6,7 @@ const userRout = require('./users/controller/user.controller');
 const flowerRout = require('./flowers/Controller/flower.controller');
 const clientRout = require('./client/controller/client.controoler');
 const providerRoute = require("./provider/controller/provider.controller");
+const adminRoute = require("./admin/controller/admin.controller");
 
 // router('/veryfy',() => {
 //     app.use(otpRout);
@@ -20,5 +21,7 @@ app.use('/flower',flowerRout );
 app.use('/clients', clientRout);
 
 app.use('/providers', providerRoute);
+
+app.use('/admins', adminRoute);
 
 module.exports = app;

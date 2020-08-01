@@ -4,13 +4,18 @@
   "description": "my Test for flower Shop exam",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/index.js"
   },
   "author": "Mohamed Monir Shabana",
   "license": "ISC",
   "dependencies": {
+    "@deepstream/client": "^5.1.4",
+    "@deepstream/server": "^5.1.2",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
+    "deepstream.io": "^3.2.5",
+    "deepstream.io-client-js": "^2.3.4",
     "dotenv": "^8.2.0",
     "email-syntax-validator": "^1.0.3",
     "express": "^4.17.1",

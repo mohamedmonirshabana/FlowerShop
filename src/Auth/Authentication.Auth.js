@@ -1,6 +1,7 @@
+const express = require('express');
 const jwt = require('jsonwebtoken');
 
-module.exports = function authenticateToken(req, res, next){
+function authenticateToken(req, res, next){
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
     if(token == null) return res.sendStatus(401);
@@ -10,8 +11,12 @@ module.exports = function authenticateToken(req, res, next){
         req.user = user;
         next();
     });
-};
+}
 
-module.exports =   function generate_Access_Token(username){
-    return   jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: '18000s' });
-};
+async function generate_Access_Token(username){
+    return await  jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: '18000s' });
+}
+
+module.exports = authenticateToken;
+
+module.exports = generate_Access_Token;
