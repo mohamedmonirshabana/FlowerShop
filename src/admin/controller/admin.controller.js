@@ -20,10 +20,10 @@ const options = {
 };
 
 
-const client = deepstream('localhost:6020',options);
-client.login({},(success) =>{
+// const client = deepstream('localhost:6020',options);
+// client.login({},(success) =>{
 
-});
+// });
 
 // const client = new DeepstreamClient('localhost:6020', options);
 // client.login();
@@ -43,10 +43,12 @@ client.login({},(success) =>{
 //             connectionStateIndicator.addClass('neutral')
 //     }
 // });
+  let  user_token;
 
 function authenticateToken(req, res, next){
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
+    user_token = authHeader && authHeader.split(' ')[1];
     if(token == null) return res.sendStatus(401);
 
     jwt.verify(token, process.env.TOKEN_SECRET, (err, user)=>{
@@ -82,14 +84,31 @@ async(req,res,next)=>{
 });
 
 adminRoute.patch('/verifyproviders', authenticateToken, (req, res, next) =>{
+    const client = deepstream('localhost:6020',options);
+   
     const proviers = req.body.providers;
     proviers.map( async (result) =>{
-        let provider ={};
+
+        // let provider ={};
         // server.set('provider',proviers);
         await providermodel.findByIdAndUpdate({_id:result},{verifyed: true});
-        provider.record = client.record.getRecord("provider");
 
-        provider.set("provStatus","busy");
+        client.login({
+            token: user_token
+        },(success, data) =>{
+            if(success){
+                const provider_record = client.record.getRecord(`provider/${client.getUid()}`);
+                provider_record.set({
+                    provider: result,
+                    status:'busy' 
+                });
+    
+            }
+        });
+
+        // provider.record = client.record.getRecord("provider");
+
+        // provider.set("provStatus","busy");
 
         // const recordName = `user/${client.getUid()}`;
         // const record = client.record.getRecord(recordName);
