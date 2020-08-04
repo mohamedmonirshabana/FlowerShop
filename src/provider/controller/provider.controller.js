@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const providerRoute = express.Router();
 //const upload = require("../../upload");
-
+const createRecord = require("../../realTime/provider.Service")
 // var uploadArr = multer({ dest: 'uploads/' });
 
 const multerService = require('../../utils/multer.service');
@@ -74,6 +74,7 @@ providerRoute.post("/addprovider",
 
         providerModel.create({userID: userId, verify: true,logoID: LogoidImange, IDImages:imagearray });
         
+        createRecord()
         res.send("Finsh");
     });
 

@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const bodyparse = require("body-parser");
 const path = require('path');
 const otpRout = require('./otp/controoller/opt.controller');
-
+const initDS = require('./realTime/provider.Service');
 
 const generalRoutes = require('./route');
 
@@ -21,6 +21,7 @@ const app = express();
 // const deepstream = new Deepstream();
 // const client = deepstream('localhost:6020').login();
 
+initDS();
 
 app.use(bodyparse.urlencoded({urlencoded:false}));
 app.use(bodyparse.json());

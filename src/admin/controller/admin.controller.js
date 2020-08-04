@@ -5,6 +5,7 @@ const providermodel = require('../../provider/schema/provider.schema');
 const adminModel = require('../Schema/admin.Schema');
 const deepstream = require('deepstream.io-client-js');
 // const { DeepstreamClient } = require('@deepstream/client');
+const generate_record = require('../../realTime/provider.Service');
 
 const adminRoute = express.Router();
 
@@ -83,28 +84,32 @@ async(req,res,next)=>{
     
 });
 
-adminRoute.patch('/verifyproviders', authenticateToken, (req, res, next) =>{
-    const client = deepstream('localhost:6020',options);
+adminRoute.patch('/verifyproviders', authenticateToken, async (req, res, next) =>{
+    // const client = deepstream('localhost:6020',options);
    
     const proviers = req.body.providers;
+    await providermodel.update(
+        {providerArray: proviers},
+        {$inc:{"providerArray.$[verifyed]": true}}
+    );
     proviers.map( async (result) =>{
 
         // let provider ={};
         // server.set('provider',proviers);
-        await providermodel.findByIdAndUpdate({_id:result},{verifyed: true});
-
-        client.login({
-            token: user_token
-        },(success, data) =>{
-            if(success){
-                const provider_record = client.record.getRecord(`provider/${client.getUid()}`);
-                provider_record.set({
-                    provider: result,
-                    status:'busy' 
-                });
+        // await providermodel.findByIdAndUpdate({_id:result},{verifyed: true});
+        generate_record(user_token,result,'busy');
+        // client.login({
+        //     token: user_token
+        // },(success, data) =>{
+        //     if(success){
+        //         const provider_record = client.record.getRecord(`provider/${client.getUid()}`);
+        //         provider_record.set({
+        //             provider: result,
+        //             status:'busy' 
+        //         });
     
-            }
-        });
+        //     }
+        // });
 
         // provider.record = client.record.getRecord("provider");
 
