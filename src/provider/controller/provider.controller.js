@@ -10,6 +10,7 @@ const createRecord = require("../../realTime/provider.Service")
 // var uploadArr = multer({ dest: 'uploads/' });
 
 const multerService = require('../../utils/multer.service');
+const { type } = require('os');
 
 
 // const app = express();
@@ -60,6 +61,9 @@ providerRoute.post("/addprovider",
      (req, res, next) => {
         const userId = req.userId;
         const Logo = req.files;
+        const lat = req.body.lat;
+        const lng = req.body.lng;
+        console.log(" Location "  + lat+"   "+ lng);
         let LogoidImange;
         let imagearray = [];
         const resultforLogo = Logo["logoID"].map(result =>{
@@ -71,10 +75,22 @@ providerRoute.post("/addprovider",
         const result2 = Logo["IDImages"].map(rese =>{
             imagearray.push(req.protocol +"://"+ req.get("host")+"/uploads/"+rese.filename);
         });
-
-        providerModel.create({userID: userId, verify: true,logoID: LogoidImange, IDImages:imagearray });
         
-        createRecord()
+        //const lat = parseFloat(lat_string);
+        // const lng = parseFloat(lng_string);
+        // parseFloat()
+        providerModel.create({
+            userID: userId, 
+            verify: true,
+            logoID: LogoidImange, 
+            IDImages:imagearray,
+            location:{
+                type:"Point",
+                coordinates:[+lng,+lat] 
+            }
+        });
+        
+        createRecord();
         res.send("Finsh");
     });
 

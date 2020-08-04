@@ -1,6 +1,8 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const clientModel = require('../schema/client.Schema');
+const providerModel = require('../../provider/schema/provider.schema');
+const usermodel = require('../../users/schema/user.schema');
 const dotenv = require('dotenv');
 
 
@@ -50,6 +52,30 @@ clientRout.post('/addclient', authenticateToken , retrurnUserID ,async (req, res
     }
     res.send("Your ID is Exist");
 
+});
+
+clientRout.post('/findnear', authenticateToken,async(req, res, next)=>{
+    const lat = req.body.lat;
+    const lng = req.body.lng;
+
+    const result = await providerModel.find({
+            location:
+            {
+                $near: {
+                    $geometry: {type:"Point", coordinates:[+lng, +lat]},
+                    $minDistance:1000,
+                    $maxDistance:50000
+                }
+            }
+        });
+        res.send(result);
+});
+
+clientRout.post('/findbyName', authenticateToken, async(req, res)=>{
+    const name = req.body.providername;
+    const userdata = usermodel.find({name: name});
+    const providerData= providerModel.find({userID: userdata._id});
+    res.send(providerData);
 });
 
 
