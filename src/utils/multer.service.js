@@ -16,7 +16,8 @@ function multerService(imagepath){
         filename:(req, file, cb)=>{
             const uniqueSuffix = Date.now() + '-'+Math.round(Math.random() * 1E9 );
             const exten = file.originalname.split('.')[1];
-            file.fieldname = uniqueSuffix+"."+exten;
+            const ex = file.mimetype;
+            file.fieldname = uniqueSuffix+"."+ex;
             console.log("extention");
             cb(null, file.fieldname);
             // cb(null, file.originalname);
