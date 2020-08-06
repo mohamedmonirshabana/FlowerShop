@@ -54,9 +54,9 @@ clientRout.post('/addclient', authenticateToken , retrurnUserID ,async (req, res
 
 });
 
-clientRout.post('/findnear', authenticateToken,async(req, res, next)=>{
-    const lat = req.body.lat;
-    const lng = req.body.lng;
+clientRout.get('/findnear/:lat/:lng', authenticateToken,async(req, res, next)=>{
+    const lat = req.param.lat;  //req.body.lat;
+    const lng = req.param.lng;
 
     const result = await providerModel.find({
             location:

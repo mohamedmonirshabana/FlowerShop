@@ -1,12 +1,12 @@
 const express = require('express');
 const providerModel = require('../schema/provider.schema');
-const multer = require('multer');
+// const multer = require('multer');
 const path = require("path");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const providerRoute = express.Router();
 //const upload = require("../../upload");
-const createRecord = require("../../realTime/provider.Service")
+const createRecord = require("../../realTime/provider.Service");
 // var uploadArr = multer({ dest: 'uploads/' });
 
 const multerService = require('../../utils/multer.service');
@@ -15,7 +15,7 @@ const { type } = require('os');
 
 // const app = express();
 
-const upload = multerService('uploads');
+const upload = multerService('providerfile');
 // const manyupload = multerService(path.resolve("providerFile/IDImages"));
 // const {deepstream} = require('@deepstream/server');
 // const ds = require('@deepstream/client');
