@@ -7,27 +7,9 @@ const dotenv = require('dotenv');
 const { json } = require('body-parser');
 const validator = require("email-syntax-validator");
 const  uploadProfile = require('../../uploadProfile');
-
 const multerService = require('../../utils/multer.service');
-
 const upload = multerService("profiles");
-
-dotenv.config();
-
-    async function generate_Access_Token(username){
-        return await  jwt.sign(username, process.env.TOKEN_SECRET, { expiresIn: '18000s' });
-    }
-    function authenticateToken(req, res, next){
-        const authHeader = req.headers['authorization'];
-        const token = authHeader && authHeader.split(' ')[1];
-        if(token == null) return res.sendStatus(401);
-
-        jwt.verify(token, process.env.TOKEN_SECRET, (err, user)=>{
-            if(err) return res.sendStatus(403);
-            req.user = user;
-            next();
-        });
-    }
+const { generate_Access_Token,authenticateToken } = require('../../Auth/Authentication.Auth');
 
    async function check_phone_on_DB(phoneNumber){
     const result = await otpModel.findOne({phone: phoneNumber});
@@ -132,8 +114,9 @@ userRoute.post('/signup', upload.single("profile") ,async (req, res , next) =>{
             console.log("arrive to image");
             const profPath = req.protocol+"://"+req.get("host")+"/profiles/"+profileimage.filename;
             const userAdd = await userModel.create({name: username, email: email, phone: phone, password: passhash,profilepics: profPath});
-            const token = await  generate_Access_Token({username: userAdd._id});
-            res.json({  username: req.body.username, email: req.body.email, phone: req.body.phone  , token: token } );  
+            const auth =await  generate_Access_Token(userAdd);
+            // const token = await  generate_Access_Token({username: userAdd._id});
+            res.json({  username: req.body.username, email: req.body.email, phone: req.body.phone  , token: auth } );  
         }else{
             next();
         }
@@ -164,24 +147,33 @@ userRoute.post('/signup', upload.single("profile") ,async (req, res , next) =>{
 });
 
 userRoute.post('/singin', async (req, res, next) =>{
+    
+    console.log("Start Function");
+
     const name = req.body.username;
     const pass = req.body.password;
+    console.log("Data is "+ req.body.username + '  '+ req.body.password);
     if(validator.validate(name)){
-
+        console.log("validate is True");
         const result = await validate_Email(name, pass);
-        if(result){
+        console.log("result is" +result);
+        if(!result){
         const userID = await getIDbyEmail(name);
+        // const auth =await  generate_Access_Token(userID);
         const token = await  generate_Access_Token({username: userID});
         res.json({username: name, token: token});
         }
     }else{
+        console.log("validate is false");
          const result = await validate_phone(name,pass);
          if(result){
          const userID = await  getIDbyphone(name);
+        //  const auth =await  generate_Access_Token(userID);
          const token = await   generate_Access_Token({username: userID });
         res.json({username: name, token: token});
          }
     }
+    // res.send("not work");
 });
 
  userRoute.patch('/update/:uid', authenticateToken,upload.single("profilepics") , async  (req, res) =>{
