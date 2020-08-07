@@ -1,5 +1,4 @@
 const express = require('express');
-// const providerModel = require('../schema/provider.schema');
 const createRecord = require("../../realTime/provider.Service");
 const multerService = require('../../utils/multer.service');
 const  {authenticateToken, returnuserID} = require('../../Auth/Authentication.Auth');
@@ -27,11 +26,11 @@ providerRoute.post("/addprovider",
             imagearray.push(req.protocol +"://"+ req.get("host")+"/uploads/"+rese.filename);
         });
         if(checkforprovider(userId)){
-
+            res.status(500).send("Error user exist");
         }else{
         addProvider(userId,LogoidImange,imagearray,lat, lng);
         createRecord();
-        res.send("Finsh");
+        res.send("user add to provider");
         }
     });
 

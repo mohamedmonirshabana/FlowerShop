@@ -1,11 +1,12 @@
 const express = require('express');
-const jwt = require('jsonwebtoken');
-const adminmodel = require('../Schema/admin.Schema');
 const providermodel = require('../../provider/schema/provider.schema');
 const adminModel = require('../Schema/admin.Schema');
 const deepstream = require('deepstream.io-client-js');
 // const { DeepstreamClient } = require('@deepstream/client');
 const generate_record = require('../../realTime/provider.Service');
+
+const { authenticateToken,returnuserID } = require('../../Auth/Authentication.Auth');
+const { check_admin, add_admin, update_provider } = require('../service/admin.service');
 
 const adminRoute = express.Router();
 
@@ -20,65 +21,16 @@ const options = {
     heartbeatInterval: 60000
 };
 
-
-// const client = deepstream('localhost:6020',options);
-// client.login({},(success) =>{
-
-// });
-
-// const client = new DeepstreamClient('localhost:6020', options);
-// client.login();
-
-// const connectionStateIndicator = ('#connection-state-indicator');
-// client.on('connectionStateChanged', connectionState => {
-//     connectionStateIndicator.removeClass('good neutral bad')
-//     switch (connectionState) {
-//         case 'OPEN':
-//             connectionStateIndicator.addClass('good')
-//             break
-//         case 'CLOSED':
-//         case 'ERROR':
-//             connectionStateIndicator.addClass('bad')
-//             break
-//         default:
-//             connectionStateIndicator.addClass('neutral')
-//     }
-// });
   let  user_token;
-
-function authenticateToken(req, res, next){
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
-    user_token = authHeader && authHeader.split(' ')[1];
-    if(token == null) return res.sendStatus(401);
-
-    jwt.verify(token, process.env.TOKEN_SECRET, (err, user)=>{
-        if(err) return res.sendStatus(403);
-        req.user = user;
-        next();
-    });
-}
-
-function returnuserID(req,res, next){
-    const authHeader= req.Headers['authorization'];
-    const token = authHeader.split(' ')[1];
-    const decoded = jwt.decode(token);
-    req.userId = decoded.username;
-    next();
-}
-
-async function checkifuserExit(userid){
-    return await adminModel.findOne({userID: userid});
-}
 
 adminRoute.post('/addadmin',
 authenticateToken,
 returnuserID,
 async(req,res,next)=>{
     const user_ID = req.userId;
-    const resultAdmin = checkifuserExit(user_ID);
+    const resultAdmin = check_admin(user_ID);
     if(!resultAdmin){
-        adminModel.create({userID: user_ID});
+        add_admin( user_ID);
         res.send("Admin Add");
     }
     
@@ -88,10 +40,11 @@ adminRoute.patch('/verifyproviders', authenticateToken, async (req, res, next) =
     // const client = deepstream('localhost:6020',options);
    
     const proviers = req.body.providers;
-    await providermodel.update(
-        {providerArray: proviers},
-        {$inc:{"providerArray.$[verifyed]": true}}
-    );
+    update_provider(proviers);
+    // await providermodel.update(
+    //     {providerArray: proviers},
+    //     {$inc:{"providerArray.$[verifyed]": true}}
+    // );
     proviers.map( async (result) =>{
 
         // let provider ={};
