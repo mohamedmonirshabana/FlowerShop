@@ -37,7 +37,7 @@ const profile = path.resolve("profiles");
 
 mongoose.connect('mongodb://localhost:27017/flowerShop');
 
-const port = 3000 || process.env.PORT ;
+const port = process.env.PORT || 3000 ;
 
 app.use(generalRoutes);
 

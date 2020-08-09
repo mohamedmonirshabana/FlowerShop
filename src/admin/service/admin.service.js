@@ -1,5 +1,5 @@
 const adminModel = require('../Schema/admin.Schema');
-const providerModel = require('../../provider/schema/provider.schema');s
+const providerModel = require('../../provider/schema/provider.schema');
 
 module.exports = {
     check_admin: async (userid) =>{

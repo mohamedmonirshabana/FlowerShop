@@ -1,4 +1,4 @@
-const providerModel = require('../schema//provider.schema');
+const providerModel = require('../schema/provider.schema');
 
 module.exports = {
     addProvider: async (userid, logoId, imageArray, lat, lng) =>{
