@@ -3,6 +3,7 @@ const createRecord = require("../../realTime/provider.Service");
 const multerService = require('../../utils/multer.service');
 const  {authenticateToken, returnuserID} = require('../../Auth/Authentication.Auth');
 const { addProvider,checkforprovider } = require('../service/provider.service');
+const {providerValidate} = require('../dto/provider.dto');
 const upload = multerService('providerfile');
 const providerRoute = express.Router();
 let cpUpload = upload.fields([{ name: 'IDImages', maxCount: 2 },{ name: 'logoID', maxCount: 1 }]);
@@ -11,6 +12,8 @@ providerRoute.post("/addprovider",
     returnuserID,
     cpUpload,
      (req, res, next) => {
+         const {error} = providerValidate(req.body);
+         if(error) return res.status(400).send(error.details[0].message);
         const userId = req.userId;
         const Logo = req.files;
         const lat = req.body.lat;

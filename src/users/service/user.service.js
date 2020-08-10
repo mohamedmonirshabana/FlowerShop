@@ -57,13 +57,14 @@ module.exports = {
         });
     },
     checkPassword: async (uid, oldpassword) => {
-        const userData = await userModel.findById(uid);
+        console.log('clickableFk',oldpassword);
+        const userData = await userModel.findOne({_id:uid});
         const hash = userData.password;
-        const oldresult = bcrypt.compareSync(oldpassword,hash);
-        return oldresult;
+        const result = bcrypt.compareSync(oldpassword,hash);
+        return result;
     },
     updatePassword: async (uid, newpassword) =>{
-        const hashpassword = await bcrypt(newpassword, 10);
+        const hashpassword = await bcrypt.hashSync(newpassword, 10);
         await userModel.findByIdAndUpdate({_id:uid},{password:hashpassword});
     }
 };

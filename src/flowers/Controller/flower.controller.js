@@ -2,11 +2,14 @@ const express = require('express');
 const multerService = require('../../utils/multer.service');
 const flowerModel = require('../Schema/Flower.Schema');
 const {createPhoto} = require('../service/flower.service');
+const { validFlower } = require('../dto/flower.dto');
 const upload = multerService("uploads");
 const flowerRouter = express.Router();
      
 
 flowerRouter.post('/upload',upload.single("myfile"), (req, res, next) =>{
+    const { error } = validFlower(req.body);
+    if(error) return res.status(400).send(error.details[0].message);
     const flowerName = req.body.flowerName;
     const price = parseFloat(req.body.price);
     const description = req.body.desc;
