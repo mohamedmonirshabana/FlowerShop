@@ -4,6 +4,8 @@ const bodyparse = require("body-parser");
 const path = require('path');
 const otpRout = require('./otp/controoller/opt.controller');
 const initDS = require('./realTime/provider.Service');
+const { init } = require('./AppSetting/service/appsetting.service');
+const { APPSETTING_MODEL_NAME } = require('../common/constants');
 
 const generalRoutes = require('./route');
 
@@ -33,14 +35,18 @@ const profile = path.resolve("profiles");
  app.use("/uploads", express.static(public));
  app.use("/profiles", express.static(profile));
 
+
 // app.use( '/public',express.static( __dirname + "/public")); //Sucess Code
 
 mongoose.connect('mongodb://localhost:27017/flowerShop');
+
+init();
 
 const port = process.env.PORT || 3000 ;
 
 app.use(generalRoutes);
 
+// init();
 
 app.listen(port, () =>{
     console.log("App is working on "+port);

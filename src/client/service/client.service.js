@@ -1,5 +1,6 @@
 const clientModel = require('../schema/client.Schema');
 const providerModel = require('../../provider/schema/provider.schema');
+const appsettings = require('../../AppSetting/schema/appsetting.Schema');
 
 module.exports = {
     check_client: async (userId) =>{
@@ -9,19 +10,20 @@ module.exports = {
          await clientModel.create({clientID: userID});
     },
     find_near: async (lat, lng) =>{
-        const result = await providerModel.finde({
-            location:{
-                $near:{
-                    $geometry:{
-                        type:"point",
-                        coordinates:[+lng, +lat],
-                        $minDistance: 1000,
-                        $maxDistance: 5000
-                    }
-                }
-            }
-        });
-        return result;
+        const settings = appsettings.findOne();
+
+        const Providers = await providerModel.finde.agregate([
+            {$geoNear :{
+                near:{
+                    type:"Point",
+                    coordinates:[+lng,+lat]
+                },
+                distanceField: "distance",
+                maxDistance:  settings.minDistanceInKM *1000,
+                spherical: true
+            }}
+        ]);
+        return Providers;
     },
     
 };
