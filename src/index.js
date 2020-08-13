@@ -6,7 +6,9 @@ const otpRout = require('./otp/controoller/opt.controller');
 const initDS = require('./realTime/provider.Service');
 const { init } = require('./AppSetting/service/appsetting.service');
 const { APPSETTING_MODEL_NAME } = require('../common/constants');
-
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsondoc =require('swagger-jsdoc');
+const swaggerDocs = require('./middlewares/swagger');
 const generalRoutes = require('./route');
 
 const jwt = require('express-jwt');
@@ -23,6 +25,13 @@ const app = express();
 // const deepstream = new Deepstream();
 // const client = deepstream('localhost:6020').login();
 
+
+swaggerDocs(app);
+
+
+ 
+
+
 initDS();
 
 app.use(bodyparse.urlencoded({urlencoded:false}));
@@ -35,6 +44,7 @@ const profile = path.resolve("profiles");
  app.use("/uploads", express.static(public));
  app.use("/profiles", express.static(profile));
 
+ 
 
 // app.use( '/public',express.static( __dirname + "/public")); //Sucess Code
 
@@ -46,7 +56,6 @@ const port = process.env.PORT || 3000 ;
 
 app.use(generalRoutes);
 
-// init();
 
 app.listen(port, () =>{
     console.log("App is working on "+port);
