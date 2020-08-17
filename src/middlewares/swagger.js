@@ -477,6 +477,39 @@ const options = {
                     }
                 }
             },
+            '/orders':{
+                post:{
+                    tags:['/orders'],
+                    summary:['add order'],
+                    requestBody:{
+                        content:{
+                            "application/json":{
+                                schema:{
+                                    type:"object",
+                                    properties:{
+                                        providerID:{
+                                            type:"string",
+                                            require:true
+                                        },
+                                        itemes:{
+                                            type: "string",
+                                            require: true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    'responses':{
+                        '200':{
+                            'description': 'order wase created'
+                        },
+                        '400':{
+                            'description': 'bad request'
+                        }
+                    }
+                }
+            }
         },
     },
     apis: [],

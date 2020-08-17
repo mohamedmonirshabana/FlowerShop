@@ -5,6 +5,7 @@
  const PROVIDER_MODEL_NAME = "provider";
  const ADMIN_MODEL_NAME = "admin";
  const APPSETTING_MODEL_NAME ="appsetting";
+ const ORDER_MODEL_NAME = "order";
 
  module.exports = OTP_MODEL_NAME;
  module.exports = USER_MODEL_NAME;
@@ -13,3 +14,4 @@
  module.exports = PROVIDER_MODEL_NAME;
  module.exports = ADMIN_MODEL_NAME;
  module.exports = APPSETTING_MODEL_NAME;
+ module.exports = ORDER_MODEL_NAME;

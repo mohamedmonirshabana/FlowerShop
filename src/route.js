@@ -10,6 +10,7 @@ const flowerRout = require('./flowers/Controller/flower.controller');
 const clientRout = require('./client/controller/client.controoler');
 const providerRoute = require("./provider/controller/provider.controller");
 const adminRoute = require("./admin/controller/admin.controller");
+const orderRoute = require("./order/controller/order.controller");
 
 
 
@@ -26,6 +27,7 @@ app.use('/providers', providerRoute);
 
 app.use('/admins', adminRoute);
 
+app.use('/orders', orderRoute);
 
 
 
