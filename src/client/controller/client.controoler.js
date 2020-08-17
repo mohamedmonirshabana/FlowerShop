@@ -11,12 +11,15 @@ const clientRout = express.Router();
 
 clientRout.post('/addclient', authenticateToken , returnuserID ,async (req, res, next)=>{
     const loginId = req.userId;
-    const checkuser = check_client(loginId);
+    const checkuser = await check_client(loginId);
     if(!checkuser){
     const clientAdded = add_client(loginId);  //await clientModel.create({ clientID: loginId });
+    res.status(200).send();
     // res.send(clientAdded._id);
+    }else{
+        res.status(400).send();
     }
-    res.send("Your ID is Exist");
+    // res.send("Your ID is Exist");
 
 });
 
@@ -24,8 +27,8 @@ clientRout.get('/findnear/:lat/:lng', authenticateToken,async(req, res, next)=>{
     const lat = req.param.lat;  //req.body.lat;
     const lng = req.param.lng;
 
-    const result = find_near(lat,lng);
-        res.send(result);
+    const result = await find_near(lat,lng);
+        res.status(200).send(result);
 });
 
 clientRout.post('/findbyName', authenticateToken, async(req, res)=>{

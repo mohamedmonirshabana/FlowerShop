@@ -4,15 +4,13 @@ const bcrypt = require('bcrypt');
 const validator = require('email-syntax-validator');
 
 module.exports = {
-    checkuser: async (userMail) =>{
-        return await userModel.findOne({email: userMail});
-    },
-    checkphone: async (userPhone) => {
-        return await userModel.findOne({phone: userPhone});
+    checkuser: async (userMail,userPhone) =>{
+        return await userModel.findOne({$and:[{email:userMail}, {phone:userPhone}]});
+
     },
     checkphoneVerify: async (phone) => {
         const verifyresult = await otpModel.findOne({phone: phone});
-        return verifyresult;
+        return  verifyresult.verify;
     },
     AddUser: async(name,email,phone,password,photo) =>{
         const hashpass= bcrypt.hashSync(password,10);
@@ -23,7 +21,7 @@ module.exports = {
             password: hashpass,
             profilepics:photo
         });
-        return useradd._id;
+        return await useradd._id;
     },
     loginuser: async(username, pass) =>{
         if(validator.validate(username)){
@@ -66,5 +64,9 @@ module.exports = {
     updatePassword: async (uid, newpassword) =>{
         const hashpassword = await bcrypt.hashSync(newpassword, 10);
         await userModel.findByIdAndUpdate({_id:uid},{password:hashpassword});
+    },
+    getuserData: async(userID) =>{
+        const userData = await userModel.findOne({_id:userID},{_id:false, password:false});
+        return userData;
     }
 };

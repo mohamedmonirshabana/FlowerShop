@@ -10,7 +10,7 @@ module.exports ={
     veryfyvalid: (otp) =>{
         const schema = {
             phone: Joi.string().min(6).max(20).required(),
-            veryfy: Joi.string().max(4).required()
+            verify: Joi.string().max(4).required()
         };
         return Joi.validate(otp, schema);
     }

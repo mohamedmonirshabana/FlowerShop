@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./src/index.js && swagger project start "
+    "start": "nodemon ./src/index.js && swagger project start "
   },
   "author": "Mohamed Monir Shabana",
   "license": "ISC",
@@ -29,5 +29,7 @@
     "swagger-jsdoc": "^4.0.0",
     "swagger-ui-express": "^4.1.4"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
 }

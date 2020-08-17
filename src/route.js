@@ -14,9 +14,9 @@ const adminRoute = require("./admin/controller/admin.controller");
 
 
 
-app.use('/veryfy',otpRout);
+app.use('/otp',otpRout);
 
-app.use('/user', userRout);
+app.use('/users', userRout);
 
 app.use('/flower',flowerRout );
 

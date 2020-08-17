@@ -9,16 +9,21 @@ module.exports = {
     create_Phone: async (phoneNumber) =>{
         let ri = new RandomInteger();
         const ran = ri.create(1111, 9999, 1);
-        await otpModel.create({phone: phoneNumber, veryfycode: ran[0]});
+        await otpModel.create({phone: phoneNumber, verifycode: ran[0]});
     },
     verifyed_Phone: async (phoneNumber, verifyedNum) =>{
-        const phone = await otpModel.findOne({phone: phoneNumber, veryfycode: verifyedNum});
-        await otpModel.findByIdAndUpdate({_id: phone._id}, {veryfy: true});
+        return  await otpModel.findOne( {$and:[{phone:phoneNumber}, {verifycode: verifyedNum}]});
+        //db.inventory.find( { $and: [ { price: { $ne: 1.99 } }, { price: { $exists: true } } ] } )
+        // await otpModel.findByIdAndUpdate({_id: phone._id}, {verify: true});
+    },
+    update_Verifystatus: async(phoneNumber) =>{
+        const phone = await otpModel.findOne({phone: phoneNumber});
+        await otpModel.findByIdAndUpdate({_id: phone._id}, {verify: true});
     },
     update_Phone: async (phoneNumber) =>{
         const phone = await otpModel.findOne({phone: phoneNumber});
         let ri = new RandomInteger();
         const ran = ri.create(1111,9999,1);
-        await otpModel.findByIdAndUpdate({_id: phone._id}, {veryfycode:ran[0], veryfy: false});
+        await otpModel.findByIdAndUpdate({_id: phone._id}, {verifycode:ran[0], verify: false});
     }
 };

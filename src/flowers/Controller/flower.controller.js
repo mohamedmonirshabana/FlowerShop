@@ -7,7 +7,7 @@ const upload = multerService("uploads");
 const flowerRouter = express.Router();
      
 
-flowerRouter.post('/upload',upload.single("myfile"), (req, res, next) =>{
+flowerRouter.post('/upload',upload.single("flower"), (req, res, next) =>{
     const { error } = validFlower(req.body);
     if(error) return res.status(400).send(error.details[0].message);
     const flowerName = req.body.flowerName;
@@ -22,7 +22,7 @@ flowerRouter.post('/upload',upload.single("myfile"), (req, res, next) =>{
     const path =  req.protocol +"://"+ req.get("host")+"/uploads/"+file.filename;
     const flowerphoto = file.path.toString();
     createPhoto(flowerName,path,price,description);
-    res.send("File Create ");
+    res.status(200).send();
 });
 
 module.exports = flowerRouter;
