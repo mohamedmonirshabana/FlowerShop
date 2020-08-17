@@ -7,7 +7,7 @@ const upload = multerService("uploads");
 const flowerRouter = express.Router();
      
 
-flowerRouter.post('/upload',upload.single("flower"), (req, res, next) =>{
+flowerRouter.post('/',upload.single("flower"), (req, res, next) =>{
     const { error } = validFlower(req.body);
     if(error) return res.status(400).send(error.details[0].message);
     const flowerName = req.body.flowerName;

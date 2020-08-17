@@ -7,11 +7,11 @@ const {providerValidate} = require('../dto/provider.dto');
 const upload = multerService('providerfile');
 const providerRoute = express.Router();
 let cpUpload = upload.fields([{ name: 'IDImages', maxCount: 2 },{ name: 'logoID', maxCount: 1 }]);
-providerRoute.post("/addprovider",
+providerRoute.post("/",
     authenticateToken,
     returnuserID,
     cpUpload,
-     (req, res, next) => {
+     async (req, res, next) => {
          const {error} = providerValidate(req.body);
          if(error) return res.status(400).send(error.details[0].message);
         const userId = req.userId;
@@ -28,12 +28,13 @@ providerRoute.post("/addprovider",
         const result2 = Logo["IDImages"].map(rese =>{
             imagearray.push(req.protocol +"://"+ req.get("host")+"/uploads/"+rese.filename);
         });
-        if(checkforprovider(userId)){
-            res.status(500).send("Error user exist");
+        const check_provider = await checkforprovider(userId);
+        if(check_provider){
+            res.status(400).send("Error user exist");
         }else{
-        addProvider(userId,LogoidImange,imagearray,lat, lng);
-        createRecord();
-        res.send("user add to provider");
+        await addProvider(userId,LogoidImange,imagearray,lat, lng);
+        await  createRecord();
+        res.status(200).send("user add to provider");
         }
     });
 

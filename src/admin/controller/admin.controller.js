@@ -23,24 +23,26 @@ const options = {
 
   let  user_token;
 
-adminRoute.post('/addadmin',
+adminRoute.post('/',
 authenticateToken,
 returnuserID,
 async(req,res,next)=>{
     const user_ID = req.userId;
-    const resultAdmin = check_admin(user_ID);
+    const resultAdmin = await check_admin(user_ID);
     if(!resultAdmin){
-        add_admin( user_ID);
-        res.send("Admin Add");
+        await add_admin( user_ID);
+        res.status(200).send("Admin Add");
+    }else{
+        res.status(400).send();
     }
     
 });
 
-adminRoute.patch('/verifyproviders', authenticateToken, async (req, res, next) =>{
+adminRoute.patch('/', authenticateToken, async (req, res, next) =>{
     // const client = deepstream('localhost:6020',options);
    
     const proviers = req.body.providers;
-    update_provider(proviers);
+    await update_provider(proviers);
     // await providermodel.update(
     //     {providerArray: proviers},
     //     {$inc:{"providerArray.$[verifyed]": true}}

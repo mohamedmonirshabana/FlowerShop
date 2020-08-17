@@ -45,6 +45,7 @@ userRoute.post('/singin', async (req, res, next) =>{
     const pass = req.body.password;
 
         const result = await loginuser(name, pass);
+        console.log("login is ", result);
         if(result){
         const userID = await getuserID(name);
         const token = await  generate_Access_Token(userID);
@@ -68,7 +69,7 @@ userRoute.post('/singin', async (req, res, next) =>{
         res.status(200).send(userData);
 });
 
-userRoute.post('/password/:uid', authenticateToken, async(req, res) => {
+userRoute.post('/:uid/changepassword', authenticateToken, async(req, res) => {
     const userID = req.params.uid;
     const oldPassword = req.body.currentpassword;
     const newPassword = req.body.newPassword;

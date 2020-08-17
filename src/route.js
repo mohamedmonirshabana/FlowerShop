@@ -18,7 +18,7 @@ app.use('/otp',otpRout);
 
 app.use('/users', userRout);
 
-app.use('/flower',flowerRout );
+app.use('/flowers',flowerRout );
 
 app.use('/clients', clientRout);
 

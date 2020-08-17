@@ -26,9 +26,14 @@ module.exports = {
     loginuser: async(username, pass) =>{
         if(validator.validate(username)){
         const getuser = await userModel.findOne({email: username});
+        if(!getuser){
+        return false;
+        }else{
         const hash = getuser.password;
         const result = bcrypt.compareSync(pass, hash);
+        console.log("my result is ", result);
         return result;
+            }
         }else{
             const getuser = await userModel.findOne({phone: username});
         const hash = getuser.password;

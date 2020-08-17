@@ -9,7 +9,7 @@ const clientRout = express.Router();
 
 
 
-clientRout.post('/addclient', authenticateToken , returnuserID ,async (req, res, next)=>{
+clientRout.post('/', authenticateToken , returnuserID ,async (req, res, next)=>{
     const loginId = req.userId;
     const checkuser = await check_client(loginId);
     if(!checkuser){
@@ -23,9 +23,9 @@ clientRout.post('/addclient', authenticateToken , returnuserID ,async (req, res,
 
 });
 
-clientRout.get('/findnear/:lat/:lng', authenticateToken,async(req, res, next)=>{
-    const lat = req.param.lat;  //req.body.lat;
-    const lng = req.param.lng;
+clientRout.get('/', authenticateToken,async(req, res, next)=>{
+    const lat = req.body.lat;  //req.body.lat;
+    const lng = req.body.lng;
 
     const result = await find_near(lat,lng);
         res.status(200).send(result);

@@ -24,7 +24,7 @@ const options = {
             }
         ],
         servers: [{
-            url: 'http://localhost:3000/'
+            url: 'http://localhost:3000'
         }],
 
         paths: {
@@ -32,6 +32,7 @@ const options = {
                 post: {
                     tags: ['/otp'],
                     summary: ['Add phone to generate verifyCode'],
+                    security:[],
                     description: 'this for user want ot Register on out App.',
                     operationId: 'get userId if admin',
                     requestBody: {
@@ -48,7 +49,7 @@ const options = {
                                 }
                             }
                         },
-                },
+                    },
                     'responses': {
                         '200': {
                             'description': 'user logged in successfully',
@@ -63,6 +64,7 @@ const options = {
                 post: {
                     tags:['/otp'],
                     summary:['Add phone and veryfyCode'],
+                    security: [],
                     requestBody: {
                         content:{
                             "application/json":{
@@ -77,26 +79,27 @@ const options = {
                                             type: "string",
                                             require: true
                                         },
+                                    }
                                 }
-                            }
+                            },
                         },
                     },
-                },
-                'responses': {
-                    '200': {
-                        'description': 'user logged in successfully',
+                    'responses': {
+                        '200': {
+                            'description': 'user logged in successfully',
+                        },
+                        '400': {
+                            'description': 'bad request',
+                        }
                     },
-                    '400': {
-                        'description': 'bad request',
-                    }
-                },
 
-            }
+                }
             },
             '/users/signup':{
                 post:{
                     tags:['/users'],
                     summary: ['Add  a user Account '],
+                    security:[],
                     requestBody:{
                         content:{
                             "multipart/form-data":{
@@ -142,6 +145,7 @@ const options = {
                 post:{
                     tags:['/users'],
                     summary:['Login a user '],
+                    security:[],
                     requestBody:{
                         content:{
                             "application/json":{
@@ -218,7 +222,7 @@ const options = {
                     }
                 }
             },
-            '/users/password/{uid}':{
+            '/users/{uid}/changepassword':{
                 post:{
                     tags:['/users'],
                     summary:['update user Password'],
@@ -261,7 +265,7 @@ const options = {
                     }
                 }
             },
-            '/flower/upload':{
+            '/flowers':{
                 post:{
                     tags:['/flower'],
                     summary:['upload Flower image'],
@@ -302,7 +306,7 @@ const options = {
                     }
                 }
             },
-            '/clients/addclient':{
+            '/clients':{
                 post:{
                     tags:['/clients'],
                     summary:['add client in DB'],
@@ -310,7 +314,10 @@ const options = {
                         content:{
                             'application/json':{
                                 schema:{
+                                    type:"object",
+                                    properties:{
 
+                                    }
                                 }
                             }
                         }
@@ -323,35 +330,25 @@ const options = {
                             'description':'bad request'
                         }
                     }
-                }
-            },
-            '/clients/:lat/:lng':{
+                },
                 get:{
                     tags:['/clients'],
                     summary:['find near provider '],
-                    parameters:[
-                        {
-                            name:'lat',
-                            in:'path',
-                            required:true,
-                            schema:{
-                                type:'string'
-                            }
-                        },
-                        {
-                            name:'lng',
-                            in: 'path',
-                            required:true,
-                            schema:{
-                                type:'string'
-                            }
-                        }
-                    ],
                     requestBody:{
                         content:{
                             'application/json':{
                                 schema:{
-
+                                    type:'object',
+                                    properties:{
+                                        lat:{
+                                            type:"string",
+                                            require:true
+                                        },
+                                        lng:{
+                                            type:"string",
+                                            require:true
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -389,7 +386,7 @@ const options = {
                     }
                 }
             },
-            '/providers/addprovider':{
+            '/providers':{
                 post:{
                     tags:['/providers'],
                     summary:['add provider '],
@@ -430,8 +427,8 @@ const options = {
                     }
                 }
             },
-            '/admins/addadmin':{
-                get:{
+            '/admins':{
+                post:{
                     tags:['/admins'],
                     summary:['add admins '],
                     requestBody:{
@@ -454,9 +451,7 @@ const options = {
                             'description':'bad request'
                         }
                     }
-                }
-            },
-            '/admins/verifyproviders':{
+                },
                 patch:{
                     tags:['/admins'],
                     summary:['verify provider  '],
@@ -481,7 +476,7 @@ const options = {
                         }
                     }
                 }
-            }
+            },
         },
     },
     apis: [],
