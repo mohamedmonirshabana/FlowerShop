@@ -509,6 +509,99 @@ const options = {
                         }
                     }
                 }
+            },
+            '/orders/{orderid}':{
+                get:{
+                    tags:['/orders'],
+                    summary:['add order'],
+                    parameters:[
+                        {
+                            name: 'orderid',
+                            in: 'path',
+                            required: true,
+                            schema:{
+                                type:'string'
+                            }
+                        }
+                    ],
+                    'responses':{
+                        '200':{
+                            'description': 'order wase created'
+                        },
+                        '400':{
+                            'description': 'bad request'
+                        }
+                    }
+                }
+            },
+            '/orders/{orderid}/{status}':{
+                patch:{
+                    tags:['/orders'],
+                    summary:['update status for order'],
+                    parameters:[
+                        {
+                            name:'orderid',
+                            in:'path',
+                            required:true,
+                            schema:{
+                                type:'string'
+                            }
+                        },
+                        {
+                            name:'status',
+                            in:'path',
+                            required:true,
+                            schema:{
+                                type:'string'
+                            }
+                        }
+                    ],
+                    requestBody:{
+                        content:{
+                            'multipart/form-data':{
+                                schema:{
+                                    type:'object',
+                                    properties:{
+
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    'responses':{
+                        '200':{
+                            'description':'order update',
+                        },
+                        '400':{
+                            'description':'bad request',
+                        }
+                    }
+                }
+            },
+            '/orders/{status}':{
+                get:{
+                    tags:['/orders'],
+                    summary:['get all order for Status '],
+                    paramaters:[
+                        {
+                            name:'status',
+                            in:'path',
+                            required:true,
+                            schema:{
+                                type:'string'
+                            }
+                        }
+                    ],
+                    'responses':{
+                        '200':{
+                            'description':'you get Data'
+                        },
+                        '400':{
+                            'description':'bad request'
+                        }
+                    }
+
+                }
             }
         },
     },
