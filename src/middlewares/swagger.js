@@ -386,6 +386,46 @@ const options = {
                     }
                 }
             },
+            '/clients/orders':{
+                get:{
+                    tags:['/clients'],
+                    summary:['add order'],
+                    parameters:[
+                        {
+                            name: 'pagenumber',
+                            in: 'query',
+                            required: false,
+                           schema:{
+                                type:'string'
+                            }
+                        },
+                        {
+                            name: 'limit',
+                            in: 'query',
+                            required: false,
+                           schema:{
+                                type:'string'
+                            }
+                        },
+                        {
+                            name:'userId',
+                            in: "query",
+                            required: false,
+                            schema:{
+                                type:"string"
+                            }
+                        }
+                    ],
+                    'responses':{
+                        '200':{
+                            'description': 'Client Get Order'
+                        },
+                        '400':{
+                            'description': 'bad request'
+                        }
+                    }
+                }
+            },
             '/providers':{
                 post:{
                     tags:['/providers'],
@@ -602,30 +642,7 @@ const options = {
                     }
                 }
             },
-            '/orders/client/{pagenumber}':{
-                get:{
-                    tags:['/orders'],
-                    summary:['add order'],
-                    parameters:[
-                        {
-                            name: 'pagenumber',
-                            in: 'path',
-                            required: true,
-                            schema:{
-                                type:'string'
-                            }
-                        }
-                    ],
-                    'responses':{
-                        '200':{
-                            'description': 'order wase created'
-                        },
-                        '400':{
-                            'description': 'bad request'
-                        }
-                    }
-                }
-            }
+            
         },
     },
     apis: [],

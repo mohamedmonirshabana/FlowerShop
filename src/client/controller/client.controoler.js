@@ -4,7 +4,7 @@ const clientModel = require('../schema/client.Schema');
 const providerModel = require('../../provider/schema/provider.schema');
 const usermodel = require('../../users/schema/user.schema');
 const {check_client, add_client, find_near} = require('../service/client.service');
-
+const { getorder, getorderCount } = require('../../order/service/order.service');
 const clientRout = express.Router();
 
 
@@ -38,6 +38,24 @@ clientRout.post('/findbyName', authenticateToken, async(req, res)=>{
     res.send(providerData);
 });
 
+clientRout.get('/orders',authenticateToken, async(req, res, next) =>{
+    const clientid = req.query.userId;
+    const pagenumber = req.query.pagenumber;
+    const pageSize = await getorderCount(clientid);
+    const limit = req.query.limit;
+    console.log("Paramater ", pagenumber , pageSize, limit, clientid);
+    const records = await getorder(clientid, pagenumber, pageSize,limit ); 
+    if(records === null){
+        res.status(400).send();
+    }
+    res.status(200).json(records);
+        /**Solve My problem
+         * get Client ID 
+         * get page Number 
+         * get Limit For Page
+         * skip (page number -1) limit (limit) client ID  
+         */
+});
 
 
 module.exports= clientRout;

@@ -45,31 +45,33 @@ orderRout.get('/:status',authenticateToken,async (req, res, next)=>{
     }
 });
 
-orderRout.get('/client/:pagenumber',authenticateToken, returnuserID, async(req, res, next) =>{
-    console.log("Start Here");
-    const clientid = req.userId;
-    console.log("user ID ", clientid);
-    const dbrecord = await getorderCount(clientid);
-    // res.status(200).json(dbrecord.toString());
-        const recordcount = dbrecord / 5;
-        console.log(recordcount);
-        const pagenumber = req.params.pagenumber;
-        const pageSize = 5;
-        const records = await getorder(clientid, recordcount, pagenumber, pageSize ); 
-        if(parseInt(pagenumber) > recordcount){
-            res.status(404).send("not Found");
-        }
-        res.status(200).json(records);
-        // res.status(200).json(records);
+// orderRout.get('/clients',authenticateToken, returnuserID, async(req, res, next) =>{
+//     console.log("Start Here");
+//     const clientid = req.userId;
+//     console.log("user ID ", clientid);
+//     const dbrecord = await getorderCount(clientid);
+//     // res.status(200).json(dbrecord.toString())P;
+//         const recordcount = dbrecord / 5;
+//         console.log(recordcount);
+//         const pagenumber = req.query.pagenumber;
+//         const pageSize = 5;
+//         const records = await getorder(clientid, recordcount, pagenumber, pageSize ); 
+//         console.log("recoed ", records);
+//         console.log("page Number ", pagenumber);
+//         if(parseInt(pagenumber) > recordcount){
+//             res.status(400).send();
+//         }
+//         res.status(200).json(records);
+//         // res.status(200).json(records);
     
 
-    //get count of record in DB 
-    // limit size in every page 
-    // C / s  = how many pages in 
-    //when add page number contain and skip for DB 
-    // if you enter big number than c return error 404 
+//     //get count of record in DB 
+//     // limit size in every page 
+//     // C / s  = how many pages in 
+//     //when add page number contain and skip for DB 
+//     // if you enter big number than c return error 404 
 
-});
+// });
 
 
 

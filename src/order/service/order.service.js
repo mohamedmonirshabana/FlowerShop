@@ -41,13 +41,16 @@ module.exports = {
         console.log("the number is ", recordCount.toString());
         return recordCount;
     },
-    getorder:async(clientID, recordcount, pagenumber,pagesize)=>{
-        const pageNumber = pagenumber;
-        const pageSize = pagesize;
-        const recordsCount = recordcount;
+    getorder:async(clientID, pagenumber,pagesize, limit)=>{
+        // console.log("my Paramater is ");
+        // console.log(`clientID ${clientID} pageNumber ${pagenumber} pageSize ${pagesize} and Limit ${limit}`);
+        const pageNumber = parseInt(pagenumber);
+        const pageSize = parseInt(pagesize);
+        const Limit = parseInt(limit);
+        const res = (pageNumber - 1) * pageSize;
+        console.log("DB limit Skip",  res);
+        const records = await orderModel.find({client: clientID}).skip((pageNumber -1)* Limit).limit(Limit).sort({createdAt:1});
 
-        const records = await orderModel.find({client: clientID}).skip((pageNumber -1)* pageSize).limit(5).sort({createdAt:1});
-        
         return records;
     }
 
