@@ -34,6 +34,21 @@ module.exports = {
     },
     getOrderAndStatus: async(orderid, status) =>{
         return await orderModel.findOne({$and:[{_id:orderid},{status:status}]});
+    },
+    getorderCount: async(clientID) =>{
+        console.log("Hellow Service ", clientID);
+        const recordCount = await orderModel.find({client: clientID}).count();
+        console.log("the number is ", recordCount.toString());
+        return recordCount;
+    },
+    getorder:async(clientID, recordcount, pagenumber,pagesize)=>{
+        const pageNumber = pagenumber;
+        const pageSize = pagesize;
+        const recordsCount = recordcount;
+
+        const records = await orderModel.find({client: clientID}).skip((pageNumber -1)* pageSize).limit(5).sort({createdAt:1});
+        
+        return records;
     }
 
 };

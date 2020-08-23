@@ -600,7 +600,30 @@ const options = {
                             'description':'bad request'
                         }
                     }
-
+                }
+            },
+            '/orders/client/{pagenumber}':{
+                get:{
+                    tags:['/orders'],
+                    summary:['add order'],
+                    parameters:[
+                        {
+                            name: 'pagenumber',
+                            in: 'path',
+                            required: true,
+                            schema:{
+                                type:'string'
+                            }
+                        }
+                    ],
+                    'responses':{
+                        '200':{
+                            'description': 'order wase created'
+                        },
+                        '400':{
+                            'description': 'bad request'
+                        }
+                    }
                 }
             }
         },
