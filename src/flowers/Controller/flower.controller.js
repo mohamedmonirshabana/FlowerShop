@@ -5,9 +5,10 @@ const {createPhoto} = require('../service/flower.service');
 const { validFlower } = require('../dto/flower.dto');
 const upload = multerService("uploads");
 const flowerRouter = express.Router();
+const { authenticateToken } = require('../../Auth/Authentication.Auth');
      
 
-flowerRouter.post('/',upload.single("flower"), (req, res, next) =>{
+flowerRouter.post('/',authenticateToken, upload.single("flower"), (req, res, next) =>{
     const { error } = validFlower(req.body);
     if(error) return res.status(400).send(error.details[0].message);
     const flowerName = req.body.flowerName;

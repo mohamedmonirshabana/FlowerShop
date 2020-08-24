@@ -5,7 +5,7 @@ const { ORDER_MODEL_NAME, PROVIDER_MODEL_NAME } = require('../../../common/const
 
 const orderSchema = new Schema({
     client:{type: Schema.Types.ObjectId, ref:'client_model_names', required: true},
-    provider: {type: Schema.Types.ObjectId, ref:'PROVIDER_MODEL_NAME', required: true},
+    provider: {type: Schema.Types.ObjectId, ref:PROVIDER_MODEL_NAME, required: true},
     status: { type: String , enum: ['PENDING', 'DELIVERED', 'FINISHED'],required: true ,default:"PENDING"},
     items:{type: [String], required: true  }
 },{timestamps:true});

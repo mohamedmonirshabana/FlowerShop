@@ -6,12 +6,11 @@ const { Search_for_phone, create_Phone,  verifyed_Phone, update_Phone, update_Ve
 const { otpvalidate, veryfyvalid } = require('../dto/otp.dto');
 
  otpRout.post('/send', async (req, res) =>{
-     console.log("number is Send");
     const {error} = otpvalidate(req.body);
     if(error) return res.status(400).send(error.details[0].message);
     const Test_phone_exist =  await Search_for_phone(req.body.phone);
     if(Test_phone_exist){
-        res.status(400).send();
+        res.status(400).send('phone number is exist');
     }else{
         create_Phone(req.body.phone);
         res.status(200).send();

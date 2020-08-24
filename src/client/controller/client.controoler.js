@@ -24,7 +24,7 @@ clientRout.post('/', authenticateToken , returnuserID ,async (req, res, next)=>{
 });
 
 clientRout.get('/', authenticateToken,async(req, res, next)=>{
-    const lat = req.body.lat;  //req.body.lat;
+    const lat = req.body.lat; 
     const lng = req.body.lng;
 
     const result = await find_near(lat,lng);
@@ -49,12 +49,6 @@ clientRout.get('/orders',authenticateToken, async(req, res, next) =>{
         res.status(400).send();
     }
     res.status(200).json(records);
-        /**Solve My problem
-         * get Client ID 
-         * get page Number 
-         * get Limit For Page
-         * skip (page number -1) limit (limit) client ID  
-         */
 });
 
 

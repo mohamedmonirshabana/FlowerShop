@@ -45,7 +45,6 @@ userRoute.post('/singin', async (req, res, next) =>{
     const pass = req.body.password;
 
         const result = await loginuser(name, pass);
-        console.log("login is ", result);
         if(result){
         const userID = await getuserID(name);
         const token = await  generate_Access_Token(userID);
@@ -58,7 +57,6 @@ userRoute.post('/singin', async (req, res, next) =>{
  userRoute.patch('/:uid', authenticateToken,upload.single("profilepics") , async  (req, res) =>{
     const {error} = validateUpdate(req.body);
     if(error) return res.status(400).send(error.details[0].meesage);
-    console.log("user id ", req.params.uid);
     const name = req.body.username;
     const email = req.body.email;
     const profile = req.file;

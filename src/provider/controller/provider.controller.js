@@ -22,7 +22,6 @@ providerRoute.post("/",
         let imagearray = [];
         const resultforLogo = Logo["logoID"].map(result =>{
             const fil = JSON.stringify(result.filename);
-            console.log("All for photo :"+fil);
             LogoidImange =req.protocol +"://"+ req.get("host")+"/uploads/"+fil;
         });
         const result2 = Logo["IDImages"].map(rese =>{
