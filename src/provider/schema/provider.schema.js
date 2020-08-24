@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const {PROVIDER_MODEL_NAME, USER_MODEL_NAME} = require('../../../common/constants');
 const { schema } = require('../../otp/schema/otp.schema');
+const autoIncrement = require('mongoose-auto-increment');
 
 const providerSchema = new Schema({
     userID:{type: Schema.Types.ObjectId, ref: USER_MODEL_NAME},
@@ -18,6 +19,8 @@ const providerSchema = new Schema({
         }
     }
 });
+
+providerSchema.plugin(autoIncrement.plugin,'PROVIDER_MODEL_NAME');
 
 providerSchema.index({location: "2dsphere"});
 
