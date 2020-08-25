@@ -1,6 +1,9 @@
 const { populate } = require('../schema/order.schema');
 const orderModel = require('../schema/order.schema');
 const providerModel = require('../../provider/schema/provider.schema');
+const Models = require('../../../common/constants');
+const flowerModel = require('../../flowers/Schema/Flower.Schema');
+const { getPrice } = require('../../flowers/service/flower.service');
 
 module.exports = {
     createOrder: async (clientID,providerID, itemeArray)=>{
@@ -8,10 +11,17 @@ module.exports = {
         const checkProvider= await providerModel.findOne({userID:providerID});
         console.log("check prov", checkProvider);
         if(checkProvider !== null){
+            // const total = await this.countFlower(itemeArray);
+            let total = 0 ;
+            for(let i=0; i< itemeArray.length; i++){
+                total += await getPrice(itemeArray[i]);
+            }
+
             const orderCreate = await orderModel.create({
                 client: clientID,
                 provider: checkProvider._id,
-                items: itemeArray
+                items: itemeArray,
+                totalPrice: Math.round(total)
             });
             return  orderCreate;
         }
@@ -33,7 +43,7 @@ module.exports = {
         return await orderModel.find({status: status});
     },
     getOrderAndStatus: async(orderid, status) =>{
-        return await orderModel.findOne({$and:[{_id:orderid},{status:status}]});
+        return await orderModel.findByIdAndUpdate({_id:orderid},{status: status});   //({$and:[{_id:orderid},{status:status}]});
     },
     getorderCount: async(clientID) =>{
         console.log("Hellow Service ", clientID);
@@ -45,8 +55,17 @@ module.exports = {
         const pageNumber = parseInt(pagenumber);
         const pageSize = parseInt(pagesize);
         const Limit = parseInt(limit);
-        const records = await orderModel.find({client: clientID}).skip((pageNumber -1)* Limit).limit(Limit).sort({createdAt:1});
+        const records = await orderModel.find({client: clientID}).skip((pageNumber -1)* Limit).limit(Limit).sort({createdAt:1}).populate({path:"items", select:"flowername"});
         return records;
+    },
+    countFlower: async(flowerArray) =>{
+        let total ;
+        flowerArray.forEach(async item => {
+            const flowerprice = await flowerModel.findById(item);
+            total += flowerprice.price;
+        });
+
+        return total;
     }
 
 };

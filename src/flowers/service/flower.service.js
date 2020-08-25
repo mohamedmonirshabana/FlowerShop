@@ -8,5 +8,9 @@ module.exports = {
             price: price,
             description: description
         });
+    },
+    getPrice: async(flowerID) =>{
+        const flower = await flowerModel.findOne({_id: flowerID});
+        return flower.price;
     }
 };

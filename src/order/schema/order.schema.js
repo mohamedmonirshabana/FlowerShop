@@ -10,7 +10,8 @@ const orderSchema = new Schema({
     client:{type: Number, ref: Models.CLIENT_MODEL_NAME, required: true},
     provider: {type: Number, ref: Models.PROVIDER_MODEL_NAME, required: true},
     status: { type: String , enum: ['PENDING', 'DELIVERED', 'FINISHED'],required: true ,default:"PENDING"},
-    items:{type: [String], required: true  }
+    items:[{type: Number, required: true, ref: Models.FLOWER_MODEL_NAME  }],
+    totalPrice:{type: Number, required: true}
 },{timestamps:true});
 
 autoIncrement.initialize(mongoose.connection);

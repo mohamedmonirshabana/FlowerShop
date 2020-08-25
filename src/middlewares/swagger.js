@@ -528,11 +528,11 @@ const options = {
                                     type:"object",
                                     properties:{
                                         providerID:{
-                                            type:"string",
+                                            type:"number",
                                             require:true
                                         },
                                         itemes:{
-                                            type: "string",
+                                            type: "number",
                                             require: true
                                         }
                                     }
@@ -584,7 +584,7 @@ const options = {
                             in:'path',
                             required:true,
                             schema:{
-                                type:'string'
+                                type:'number'
                             }
                         },
                         {
@@ -596,18 +596,18 @@ const options = {
                             }
                         }
                     ],
-                    requestBody:{
-                        content:{
-                            'multipart/form-data':{
-                                schema:{
-                                    type:'object',
-                                    properties:{
+                    // requestBody:{
+                    //     content:{
+                    //         'multipart/form-data':{
+                    //             schema:{
+                    //                 type:'object',
+                    //                 properties:{
 
-                                    }
-                                }
-                            }
-                        }
-                    },
+                    //                 }
+                    //             }
+                    //         }
+                    //     }
+                    // },
                     'responses':{
                         '200':{
                             'description':'order update',
