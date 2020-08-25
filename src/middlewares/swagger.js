@@ -310,18 +310,18 @@ const options = {
                 post:{
                     tags:['/clients'],
                     summary:['add client in DB'],
-                    requestBody:{
-                        content:{
-                            'application/json':{
-                                schema:{
-                                    type:"object",
-                                    properties:{
+                    // requestBody:{
+                    //     content:{
+                    //         'application/json':{
+                    //             schema:{
+                    //                 type:"object",
+                    //                 properties:{
 
-                                    }
-                                }
-                            }
-                        }
-                    },
+                    //                 }
+                    //             }
+                    //         }
+                    //     }
+                    // },
                     'responses':{
                         '200':{
                             'description':'Client add in DB'

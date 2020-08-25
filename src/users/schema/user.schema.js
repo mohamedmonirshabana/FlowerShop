@@ -1,7 +1,9 @@
 const Mongoose = require('mongoose');
 const Schema = Mongoose.Schema;
 const autoIncrement = require('mongoose-auto-increment');
-const { USER_MODEL_NAME } = require('../../../common/constants');
+const Models  = require('../../../common/constants');
+
+//{ USER_MODEL_NAME }
 
 const userSchema = new Schema({
     // _id:{type: Schema.Types.ObjectId },
@@ -11,7 +13,15 @@ const userSchema = new Schema({
     password:{type:String, required: true},
     profilepics:{type: String, required: true}
 });
-userSchema.plugin(autoIncrement.plugin,'USER_MODEL_NAME');
+autoIncrement.initialize(Mongoose.connection);
+userSchema.plugin(autoIncrement.plugin,{
+    model:Models.USER_MODEL_NAME,
+    field: '_id',
+    startAt:1,
+    incrementBy:1
+});
 
-const userModel = Mongoose.model("USER_MODEL_NAME", userSchema);
- module.exports = userModel;
+
+
+const userModel = Mongoose.model( Models.USER_MODEL_NAME, userSchema);
+module.exports = userModel;

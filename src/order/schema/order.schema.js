@@ -1,18 +1,26 @@
-const { string, date } = require('joi');
+// const { string, date } = require('joi');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { ORDER_MODEL_NAME, PROVIDER_MODEL_NAME } = require('../../../common/constants');
+const Models  = require('../../../common/constants');
 const autoIncrement = require('mongoose-auto-increment');
 
+//{ ORDER_MODEL_NAME, PROVIDER_MODEL_NAME }
+
 const orderSchema = new Schema({
-    client:{type: Schema.Types.ObjectId, ref:'client_model_names', required: true},
-    provider: {type: Schema.Types.ObjectId, ref:PROVIDER_MODEL_NAME, required: true},
+    client:{type: Number, ref: Models.CLIENT_MODEL_NAME, required: true},
+    provider: {type: Number, ref: Models.PROVIDER_MODEL_NAME, required: true},
     status: { type: String , enum: ['PENDING', 'DELIVERED', 'FINISHED'],required: true ,default:"PENDING"},
     items:{type: [String], required: true  }
 },{timestamps:true});
 
-orderSchema.plugin(autoIncrement.plugin,'ORDER_MODEL_NAME');
+autoIncrement.initialize(mongoose.connection);
 
-const orderModel = mongoose.model("ORDER_MODEL_NAME", orderSchema);
+orderSchema.plugin(autoIncrement.plugin,{ 
+    model:'ORDER_MODEL_NAME',
+    field:'_id',
+    startAt:1,
+    incrementBy:1
+});
 
+const orderModel = mongoose.model(Models.ORDER_MODEL_NAME, orderSchema);
 module.exports = orderModel;

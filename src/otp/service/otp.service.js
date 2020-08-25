@@ -9,7 +9,8 @@ module.exports = {
     create_Phone: async (phoneNumber) =>{
         let ri = new RandomInteger();
         const ran = ri.create(1111, 9999, 1);
-        await otpModel.create({phone: phoneNumber, verifycode: ran[0]});
+        const addOTP = await otpModel.create({phone: phoneNumber, verifycode: ran[0]});
+        addOTP.save();
     },
     verifyed_Phone: async (phoneNumber, verifyedNum) =>{
         return  await otpModel.findOne( {$and:[{phone:phoneNumber}, {verifycode: verifyedNum}]});

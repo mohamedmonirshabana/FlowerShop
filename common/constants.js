@@ -1,17 +1,11 @@
- const OTP_MODEL_NAME= "otp";
- const USER_MODEL_NAME ="user";
- const FLOWER_MODEL_NAME = "flower";
- const CLIENT_MODEL_NAME = "client";
- const PROVIDER_MODEL_NAME = "provider";
- const ADMIN_MODEL_NAME = "admin";
- const APPSETTING_MODEL_NAME ="appsetting";
- const ORDER_MODEL_NAME = "order";
-
- module.exports = OTP_MODEL_NAME;
- module.exports = USER_MODEL_NAME;
- module.exports = FLOWER_MODEL_NAME;
- module.exports = CLIENT_MODEL_NAME;
- module.exports = PROVIDER_MODEL_NAME;
- module.exports = ADMIN_MODEL_NAME;
- module.exports = APPSETTING_MODEL_NAME;
- module.exports = ORDER_MODEL_NAME;
+let baseModelName = "FLO-"
+module.exports = {
+    OTP_MODEL_NAME: baseModelName + "otp",
+    USER_MODEL_NAME: baseModelName + "user",
+    FLOWER_MODEL_NAME: baseModelName + "flower",
+    CLIENT_MODEL_NAME: baseModelName + "client",
+    PROVIDER_MODEL_NAME: baseModelName + "provider",
+    ADMIN_MODEL_NAME: baseModelName + "admin",
+    APPSETTING_MODEL_NAME: baseModelName + "appsetting",
+    ORDER_MODEL_NAME: baseModelName + "order"
+} 

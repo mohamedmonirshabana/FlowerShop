@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const autoIncrement = require('mongoose-auto-increment');
 const bodyparse = require("body-parser");
 const path = require('path');
 const otpRout = require('./otp/controoller/opt.controller');
@@ -48,7 +49,9 @@ const profile = path.resolve("profiles");
 
 // app.use( '/public',express.static( __dirname + "/public")); //Sucess Code
 
-mongoose.connect('mongodb://localhost:27017/flowerShop');
+ mongoose.connect('mongodb://localhost:27017/flowerShop');
+
+autoIncrement.initialize(mongoose.connection);
 
 init();
 

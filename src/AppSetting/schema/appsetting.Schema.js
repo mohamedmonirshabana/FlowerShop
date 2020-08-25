@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const {APPSETTING_MODEL_NAME} = require('../../../common/constants');
+const Models = require('../../../common/constants');
 const autoIncrement = require('mongoose-auto-increment');
 const Schema = mongoose.Schema;
 
@@ -7,8 +7,15 @@ const appSettingSchema = new Schema({
     minDistanceInKM: {type: Number, default:5}
 });
 
-appSettingSchema.plugin(autoIncrement.plugin, 'APPSETTING_MODEL_NAME' );
+autoIncrement.initialize(mongoose.connection);
 
-const appSettingModel = mongoose.model("APPSETTING_MODEL_NAME", appSettingSchema);
+appSettingSchema.plugin(autoIncrement.plugin, {
+    model:'APPSETTING_MODEL_NAME',
+    field:'_id',
+    startAt:1,
+    incrementBy:1
+});
+
+const appSettingModel = mongoose.model( Models.APPSETTING_MODEL_NAME, appSettingSchema);
 
 module.exports = appSettingModel;

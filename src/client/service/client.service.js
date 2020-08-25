@@ -4,10 +4,12 @@ const appsettings = require('../../AppSetting/schema/appsetting.Schema');
 
 module.exports = {
     check_client: async (userId) =>{
-        return await clientModel.findOne({clientID: userId});
+        const userData = await clientModel.findOne({clientID: userId});
+        return userData;
     },
     add_client: async (userID) =>{
-         await clientModel.create({clientID: userID});
+         const client = await clientModel.create({clientID: userID});
+         client.save();
     },
     find_near: async (lat, lng) =>{
         const settings = appsettings.findOne();

@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { FLOWER_MODEL_NAME } = require('../../../common/constants');
+const Models = require('../../../common/constants');
+const autoIncrement = require('mongoose-auto-increment');
+
 
 const flowerSchema = new Schema({
     flowername: {type: String, required: true},
@@ -8,7 +10,17 @@ const flowerSchema = new Schema({
     price:{type:Number, required:true},
     description:{type:String, required:false}
 });
+autoIncrement.initialize(mongoose.connection);
 
-const flowerModel = mongoose.model("FLOWER_MODEL_NAME",flowerSchema);
+flowerSchema.plugin(autoIncrement.plugin,{
+    model: Models.FLOWER_MODEL_NAME,
+    field:'_id',
+    startAt:1,
+    incrementBy:1
+});
+
+
+const flowerModel = mongoose.model( Models.FLOWER_MODEL_NAME,flowerSchema);
 
 module.exports= flowerModel;
+

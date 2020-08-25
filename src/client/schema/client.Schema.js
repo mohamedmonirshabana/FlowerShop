@@ -1,17 +1,23 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const {CLIENT_MODEL_NAME} = require('../../../common/constants'); 
+const Models = require('../../../common/constants'); 
 const { schema } = require("../../otp/schema/otp.schema");
 const autoIncrement = require('mongoose-auto-increment');
 
 const clientSchema = new Schema({
     notification:{type:Boolean, required: true, default: true},
-    clientID: {type: Schema.Types.ObjectId, ref: 'user_model_names'  ,  required: true}
+    clientID: {type: Number, ref:  Models.USER_MODEL_NAME  ,  required: true}
 
 });
+autoIncrement.initialize(mongoose.connection);
 
-clientSchema.plugin(autoIncrement.plugin,'CLIENT_MODEL_NAME');
+clientSchema.plugin(autoIncrement.plugin,{
+    model:Models.CLIENT_MODEL_NAME,
+    field:'_id',
+    startAt:1,
+    incrementBy:1
+});
 
-const clientModel = mongoose.model("CLIENT_MODEL_NAME", clientSchema);
+const clientModel = mongoose.model( Models.CLIENT_MODEL_NAME, clientSchema);
 
 module.exports = clientModel;

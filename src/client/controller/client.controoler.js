@@ -11,11 +11,13 @@ const clientRout = express.Router();
 
 clientRout.post('/', authenticateToken , returnuserID ,async (req, res, next)=>{
     const loginId = req.userId;
-    const checkuser = await check_client(loginId);
+    console.log(" user ID  "+loginId);
+    const checkuser = await check_client(+loginId);
+    console.log(checkuser);
     if(!checkuser){
-    const clientAdded = add_client(loginId);  //await clientModel.create({ clientID: loginId });
+    const clientAdded = await add_client(loginId);  //await clientModel.create({ clientID: loginId });
     res.status(200).send();
-    // res.send(clientAdded._id);
+    res.send(clientAdded._id);
     }else{
         res.status(400).send();
     }
