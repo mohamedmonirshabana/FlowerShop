@@ -11,7 +11,7 @@ const swaggerOptions = {
             contact:{
                 name: "Mohamed Shabana"
             },
-            server: ["http://localhost:3000"]   
+            server: ["http://localhost:3000/","https://flowershoppro.herokuapp.com/"]   
         }
     },
     apis:["app.js"]
