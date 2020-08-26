@@ -7,6 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon ./src/index.js && swagger project start "
   },
+  "engines": {
+    "node": "10.x"
+  },
   "author": "Mohamed Monir Shabana",
   "license": "ISC",
   "dependencies": {
