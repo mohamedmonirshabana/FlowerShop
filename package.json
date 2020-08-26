@@ -8,7 +8,7 @@
     "start": "nodemon ./src/index.js && swagger project start "
   },
   "engines": {
-    "node": "10.x"
+    "node": "10.16.0"
   },
   "author": "Mohamed Monir Shabana",
   "license": "ISC",
