@@ -27,7 +27,7 @@ const options = {
             url: 'http://localhost:3000'
         },
         {
-            url: 'https://flowershoppro.herokuapp.com/'
+            url: 'https://flowershoppro.herokuapp.com'
         }
         ],
 
