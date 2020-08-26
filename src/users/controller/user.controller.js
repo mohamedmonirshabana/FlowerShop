@@ -11,19 +11,13 @@ const userRoute = express.Router();
 
 userRoute.post('/signup', upload.single("profile") ,async (req, res , next) =>{
     const {error} = ValidateUser(req.body);
-    if(error) {
-        
-        return res.status(400).send(error.details[0].meesage);
-    }
-
+    if(error)  return res.status(400).send(error.details[0].meesage);
     const profileimage = req.file;
     const password = req.body.password;
     const username = req.body.username;
     const email = req.body.email;
     const phone = req.body.phone;
-
     const checkResult = await checkuser(email,phone);
-
    if(!checkResult){
        const verifyuser = await checkphoneVerify(phone);
        if(verifyuser){

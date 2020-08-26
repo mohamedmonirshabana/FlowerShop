@@ -11,7 +11,6 @@ const clientRout = express.Router();
 
 clientRout.post('/', authenticateToken , returnuserID ,async (req, res, next)=>{
     const loginId = req.userId;
-    console.log(" user ID  "+loginId);
     const checkuser = await check_client(+loginId);
     console.log(checkuser);
     if(!checkuser){

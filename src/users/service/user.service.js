@@ -6,7 +6,6 @@ const validator = require('email-syntax-validator');
 module.exports = {
     checkuser: async (userMail,userPhone) =>{
         return await userModel.findOne({$and:[{email:userMail}, {phone:userPhone}]});
-
     },
     checkphoneVerify: async (phone) => {
         const verifyresult = await otpModel.findOne({phone: phone});
@@ -25,20 +24,19 @@ module.exports = {
     },
     loginuser: async(username, pass) =>{
         if(validator.validate(username)){
-        const getuser = await userModel.findOne({email: username});
-        if(!getuser){
-        return false;
-        }else{
-        const hash = getuser.password;
-        const result = bcrypt.compareSync(pass, hash);
-        console.log("my result is ", result);
-        return result;
+            const getuser = await userModel.findOne({email: username});
+            if(!getuser){
+                return false;
+            }else{
+                const hash = getuser.password;
+                const result = bcrypt.compareSync(pass, hash);
+                return result;
             }
         }else{
             const getuser = await userModel.findOne({phone: username});
-        const hash = getuser.password;
-        const result = bcrypt.compareSync(pass, hash);
-        return result;
+            const hash = getuser.password;
+            const result = bcrypt.compareSync(pass, hash);
+            return result;
         }
     },
     getuserID: async (mailphone) =>{

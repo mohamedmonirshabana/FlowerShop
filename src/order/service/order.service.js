@@ -7,9 +7,7 @@ const { getPrice } = require('../../flowers/service/flower.service');
 
 module.exports = {
     createOrder: async (clientID,providerID, itemeArray)=>{
-      
         const checkProvider= await providerModel.findOne({userID:providerID});
-        console.log("check prov", checkProvider);
         if(checkProvider !== null){
             // const total = await this.countFlower(itemeArray);
             let total = 0 ;

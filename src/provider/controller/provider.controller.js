@@ -36,6 +36,4 @@ providerRoute.post("/",
         res.status(200).send("user add to provider");
         }
     });
-
-
 module.exports = providerRoute;
