@@ -49,7 +49,8 @@ const profile = path.resolve("profiles");
 
 // app.use( '/public',express.static( __dirname + "/public")); //Sucess Code
 
- mongoose.connect('mongodb://localhost:27017/flowerShop');
+//  mongoose.connect('mongodb://localhost:27017/flowerShop');
+mongoose.connect('mongodb+srv://monir:index@12@cluster0-vwkya.mongodb.net/flowershop?retryWrites=true&w=majority');
 
 autoIncrement.initialize(mongoose.connection);
 
