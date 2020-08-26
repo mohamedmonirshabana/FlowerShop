@@ -25,24 +25,28 @@ const options = {
         ],
         servers: [{
             url: 'http://localhost:3000'
-        }],
+        },
+        {
+            url: 'https://flowershoppro.herokuapp.com/'
+        }
+        ],
 
         paths: {
             '/otp/send': {
                 post: {
                     tags: ['/otp'],
                     summary: ['Add phone to generate verifyCode'],
-                    security:[],
+                    security: [],
                     description: 'this for user want ot Register on out App.',
                     operationId: 'get userId if admin',
                     requestBody: {
-                        content:{
-                            "application/json":{
+                        content: {
+                            "application/json": {
                                 schema: {
-                                    type:"object",
-                                    properties:{
-                                        phone:{
-                                            type:"string",
+                                    type: "object",
+                                    properties: {
+                                        phone: {
+                                            type: "string",
                                             require: true
                                         }
                                     }
@@ -60,22 +64,22 @@ const options = {
                     },
                 },
             },
-            '/otp/verifyed':{
+            '/otp/verifyed': {
                 post: {
-                    tags:['/otp'],
-                    summary:['Add phone and veryfyCode'],
+                    tags: ['/otp'],
+                    summary: ['Add phone and veryfyCode'],
                     security: [],
                     requestBody: {
-                        content:{
-                            "application/json":{
+                        content: {
+                            "application/json": {
                                 schema: {
-                                    type:"object",
-                                    properties:{
-                                        phone:{
-                                            type:"string",
+                                    type: "object",
+                                    properties: {
+                                        phone: {
+                                            type: "string",
                                             require: true
                                         },
-                                        verify:{
+                                        verify: {
                                             type: "string",
                                             require: true
                                         },
@@ -95,34 +99,34 @@ const options = {
 
                 }
             },
-            '/users/signup':{
-                post:{
-                    tags:['/users'],
+            '/users/signup': {
+                post: {
+                    tags: ['/users'],
                     summary: ['Add  a user Account '],
-                    security:[],
-                    requestBody:{
-                        content:{
-                            "multipart/form-data":{
-                                schema:{
-                                    type:"object",
+                    security: [],
+                    requestBody: {
+                        content: {
+                            "multipart/form-data": {
+                                schema: {
+                                    type: "object",
                                     properties: {
-                                        profile:{
-                                            type:"file",
+                                        profile: {
+                                            type: "file",
                                             require: true
                                         },
-                                        username:{
-                                            type:"string",
-                                            requie:true
+                                        username: {
+                                            type: "string",
+                                            requie: true
                                         },
-                                        email:{
-                                            type:"string",
-                                            require: true
-                                        },
-                                        phone:{
+                                        email: {
                                             type: "string",
                                             require: true
                                         },
-                                        password:{
+                                        phone: {
+                                            type: "string",
+                                            require: true
+                                        },
+                                        password: {
                                             type: "string",
                                             require: true
                                         }
@@ -141,23 +145,23 @@ const options = {
                     },
                 }
             },
-            '/users/singin':{
-                post:{
-                    tags:['/users'],
-                    summary:['Login a user '],
-                    security:[],
-                    requestBody:{
-                        content:{
-                            "application/json":{
-                                schema:{
-                                    type:"object",
-                                    properties:{
-                                        username:{
-                                            type:"string",
+            '/users/singin': {
+                post: {
+                    tags: ['/users'],
+                    summary: ['Login a user '],
+                    security: [],
+                    requestBody: {
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    type: "object",
+                                    properties: {
+                                        username: {
+                                            type: "string",
                                             require: true
                                         },
-                                        password:{
-                                            type:"string",
+                                        password: {
+                                            type: "string",
                                             require: true
                                         }
                                     }
@@ -175,141 +179,141 @@ const options = {
                     }
                 }
             },
-            '/users/{uid}':{
-                patch:{
-                    tags:['/users'],
-                    summary:['update user Data'],
-                    parameters:[
-                        {
-                            name:'uid',
-                            in:'path',
-                            required:true,
-                            schema:{
-                                type:'string'
-                            }
-                        }
-                    ],
-                    requestBody:{
-                        content:{
-                            "multipart/form-data":{
-                                schema:{
-                                    type:"object",
-                                    properties:{
-                                        username:{
-                                            type:"string",
-                                            require: true
-                                        },
-                                        email:{
-                                            type:"string",
-                                            require:true
-                                        },
-                                        profilepics:{
-                                            type:"file",
-                                            require: true
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    'responses': {
-                        '200': {
-                            'description': 'user logged in successfully',
-                        },
-                        '400': {
-                            'description': 'bad request',
-                        }
-                    }
-                }
-            },
-            '/users/{uid}/changepassword':{
-                post:{
-                    tags:['/users'],
-                    summary:['update user Password'],
-                    parameters:[ 
+            '/users/{uid}': {
+                patch: {
+                    tags: ['/users'],
+                    summary: ['update user Data'],
+                    parameters: [
                         {
                             name: 'uid',
                             in: 'path',
                             required: true,
-                            schema:{
+                            schema: {
                                 type: 'string'
                             }
                         }
-                     ],
-                    requestBody:{
-                        content:{
-                            'application/json':{
-                                schema:{
-                                    type:'object',
-                                    properties:{
-                                        currentpassword:{
-                                            type:'string',
+                    ],
+                    requestBody: {
+                        content: {
+                            "multipart/form-data": {
+                                schema: {
+                                    type: "object",
+                                    properties: {
+                                        username: {
+                                            type: "string",
                                             require: true
                                         },
-                                        newPassword:{
-                                            type:"string",
-                                            require:true
+                                        email: {
+                                            type: "string",
+                                            require: true
+                                        },
+                                        profilepics: {
+                                            type: "file",
+                                            require: true
                                         }
                                     }
                                 }
                             }
                         }
                     },
-                    'responses':{
-                        '200':{
-                            'description':'your password Change',
+                    'responses': {
+                        '200': {
+                            'description': 'user logged in successfully',
                         },
-                        '400':{
-                            'descript':'bad request',
+                        '400': {
+                            'description': 'bad request',
                         }
                     }
                 }
             },
-            '/flowers':{
-                post:{
-                    tags:['/flower'],
-                    summary:['upload Flower image'],
-                    requestBody:{
-                        content:{
-                            'multipart/form-data':{
-                                schema:{
-                                    type:"object",
-                                    properties:{
-                                        flower:{
-                                            type:"file",
+            '/users/{uid}/changepassword': {
+                post: {
+                    tags: ['/users'],
+                    summary: ['update user Password'],
+                    parameters: [
+                        {
+                            name: 'uid',
+                            in: 'path',
+                            required: true,
+                            schema: {
+                                type: 'string'
+                            }
+                        }
+                    ],
+                    requestBody: {
+                        content: {
+                            'application/json': {
+                                schema: {
+                                    type: 'object',
+                                    properties: {
+                                        currentpassword: {
+                                            type: 'string',
                                             require: true
                                         },
-                                        flowerName:{
-                                            type:"string",
-                                            require:true
-                                        },
-                                        price:{
-                                            type:"string",
-                                            require:true
-                                        },
-                                        desc:{
-                                            type:"string",
-                                            require:true
+                                        newPassword: {
+                                            type: "string",
+                                            require: true
                                         }
                                     }
                                 }
                             }
                         }
                     },
-                    'responses':{
-                        '200':{
-                            'description':'your upload ',
+                    'responses': {
+                        '200': {
+                            'description': 'your password Change',
                         },
-                        '400':{
-                            'description':'bad request'
+                        '400': {
+                            'descript': 'bad request',
                         }
                     }
                 }
             },
-            '/clients':{
-                post:{
-                    tags:['/clients'],
-                    summary:['add client in DB'],
+            '/flowers': {
+                post: {
+                    tags: ['/flower'],
+                    summary: ['upload Flower image'],
+                    requestBody: {
+                        content: {
+                            'multipart/form-data': {
+                                schema: {
+                                    type: "object",
+                                    properties: {
+                                        flower: {
+                                            type: "file",
+                                            require: true
+                                        },
+                                        flowerName: {
+                                            type: "string",
+                                            require: true
+                                        },
+                                        price: {
+                                            type: "string",
+                                            require: true
+                                        },
+                                        desc: {
+                                            type: "string",
+                                            require: true
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    'responses': {
+                        '200': {
+                            'description': 'your upload ',
+                        },
+                        '400': {
+                            'description': 'bad request'
+                        }
+                    }
+                }
+            },
+            '/clients': {
+                post: {
+                    tags: ['/clients'],
+                    summary: ['add client in DB'],
                     // requestBody:{
                     //     content:{
                     //         'application/json':{
@@ -322,216 +326,216 @@ const options = {
                     //         }
                     //     }
                     // },
-                    'responses':{
-                        '200':{
-                            'description':'Client add in DB'
+                    'responses': {
+                        '200': {
+                            'description': 'Client add in DB'
                         },
-                        '400':{
-                            'description':'bad request'
+                        '400': {
+                            'description': 'bad request'
                         }
                     }
                 },
-                get:{
-                    tags:['/clients'],
-                    summary:['find near provider '],
-                    requestBody:{
-                        content:{
-                            'application/json':{
-                                schema:{
-                                    type:'object',
-                                    properties:{
-                                        lat:{
-                                            type:"string",
-                                            require:true
+                get: {
+                    tags: ['/clients'],
+                    summary: ['find near provider '],
+                    requestBody: {
+                        content: {
+                            'application/json': {
+                                schema: {
+                                    type: 'object',
+                                    properties: {
+                                        lat: {
+                                            type: "string",
+                                            require: true
                                         },
-                                        lng:{
-                                            type:"string",
-                                            require:true
+                                        lng: {
+                                            type: "string",
+                                            require: true
                                         }
                                     }
                                 }
                             }
                         }
                     },
-                    'response':{
-                        '200':{
-                            'description':'find all near '
+                    'response': {
+                        '200': {
+                            'description': 'find all near '
                         },
-                        '400':{
-                            'description':'bad request'
+                        '400': {
+                            'description': 'bad request'
                         }
                     }
                 }
             },
-            '/clients/findbyName':{
-                get:{
-                    tags:['/clients'],
-                    summary:['find  provider by Name '],
-                    requestBody:{
-                        content:{
-                            'application/json':{
-                                schema:{
+            '/clients/findbyName': {
+                get: {
+                    tags: ['/clients'],
+                    summary: ['find  provider by Name '],
+                    requestBody: {
+                        content: {
+                            'application/json': {
+                                schema: {
 
                                 }
                             }
                         }
                     },
-                    'response':{
-                        '200':{
-                            'description':'find all near '
+                    'response': {
+                        '200': {
+                            'description': 'find all near '
                         },
-                        '400':{
-                            'description':'bad request'
+                        '400': {
+                            'description': 'bad request'
                         }
                     }
                 }
             },
-            '/clients/orders':{
-                get:{
-                    tags:['/clients'],
-                    summary:['add order'],
-                    parameters:[
+            '/clients/orders': {
+                get: {
+                    tags: ['/clients'],
+                    summary: ['add order'],
+                    parameters: [
                         {
                             name: 'pagenumber',
                             in: 'query',
                             required: false,
-                           schema:{
-                                type:'string'
+                            schema: {
+                                type: 'string'
                             }
                         },
                         {
                             name: 'limit',
                             in: 'query',
                             required: false,
-                           schema:{
-                                type:'string'
+                            schema: {
+                                type: 'string'
                             }
                         },
                         {
-                            name:'userId',
+                            name: 'userId',
                             in: "query",
                             required: false,
-                            schema:{
-                                type:"string"
+                            schema: {
+                                type: "string"
                             }
                         }
                     ],
-                    'responses':{
-                        '200':{
+                    'responses': {
+                        '200': {
                             'description': 'Client Get Order'
                         },
-                        '400':{
+                        '400': {
                             'description': 'bad request'
                         }
                     }
                 }
             },
-            '/providers':{
-                post:{
-                    tags:['/providers'],
-                    summary:['add provider '],
-                    requestBody:{
-                        content:{
-                            'multipart/form-data':{
-                                schema:{
-                                    type:'object',
-                                    properties:{
-                                        IDImages:{
-                                            type:"file",
-                                            require:true
+            '/providers': {
+                post: {
+                    tags: ['/providers'],
+                    summary: ['add provider '],
+                    requestBody: {
+                        content: {
+                            'multipart/form-data': {
+                                schema: {
+                                    type: 'object',
+                                    properties: {
+                                        IDImages: {
+                                            type: "file",
+                                            require: true
                                         },
-                                        logoID:{
-                                            type:"file",
-                                            require:true
+                                        logoID: {
+                                            type: "file",
+                                            require: true
                                         },
-                                        lat:{
-                                            type:"string",
-                                            requie:true
+                                        lat: {
+                                            type: "string",
+                                            requie: true
                                         },
-                                        lng:{
-                                            type:"string",
-                                            require:true
+                                        lng: {
+                                            type: "string",
+                                            require: true
                                         }
                                     },
                                 }
                             }
                         }
                     },
-                    'response':{
-                        '200':{
-                            'description':'provider add '
+                    'response': {
+                        '200': {
+                            'description': 'provider add '
                         },
-                        '400':{
-                            'description':'bad request'
+                        '400': {
+                            'description': 'bad request'
                         }
                     }
                 }
             },
-            '/admins':{
-                post:{
-                    tags:['/admins'],
-                    summary:['add admins '],
-                    requestBody:{
-                        content:{
-                            'application/json':{
-                                schema:{
-                                    type:'object',
-                                    properties:{
+            '/admins': {
+                post: {
+                    tags: ['/admins'],
+                    summary: ['add admins '],
+                    requestBody: {
+                        content: {
+                            'application/json': {
+                                schema: {
+                                    type: 'object',
+                                    properties: {
 
                                     }
                                 }
                             }
                         }
                     },
-                    'response':{
-                        '200':{
-                            'description':'provider add '
+                    'response': {
+                        '200': {
+                            'description': 'provider add '
                         },
-                        '400':{
-                            'description':'bad request'
+                        '400': {
+                            'description': 'bad request'
                         }
                     }
                 },
-                patch:{
-                    tags:['/admins'],
-                    summary:['verify provider  '],
-                    requestBody:{
-                        content:{
-                            'application/json':{
-                                schema:{
-                                    providers:{
-                                        type:"string",
+                patch: {
+                    tags: ['/admins'],
+                    summary: ['verify provider  '],
+                    requestBody: {
+                        content: {
+                            'application/json': {
+                                schema: {
+                                    providers: {
+                                        type: "string",
                                         require: true
                                     }
                                 }
                             }
                         }
                     },
-                    'response':{
-                        '200':{
-                            'description':'provider verifyed '
+                    'response': {
+                        '200': {
+                            'description': 'provider verifyed '
                         },
-                        '400':{
-                            'description':'bad request'
+                        '400': {
+                            'description': 'bad request'
                         }
                     }
                 }
             },
-            '/orders':{
-                post:{
-                    tags:['/orders'],
-                    summary:['add order'],
-                    requestBody:{
-                        content:{
-                            "application/json":{
-                                schema:{
-                                    type:"object",
-                                    properties:{
-                                        providerID:{
-                                            type:"number",
-                                            require:true
+            '/orders': {
+                post: {
+                    tags: ['/orders'],
+                    summary: ['add order'],
+                    requestBody: {
+                        content: {
+                            "application/json": {
+                                schema: {
+                                    type: "object",
+                                    properties: {
+                                        providerID: {
+                                            type: "number",
+                                            require: true
                                         },
-                                        itemes:{
+                                        itemes: {
                                             type: "number",
                                             require: true
                                         }
@@ -540,59 +544,59 @@ const options = {
                             }
                         }
                     },
-                    'responses':{
-                        '200':{
+                    'responses': {
+                        '200': {
                             'description': 'order wase created'
                         },
-                        '400':{
+                        '400': {
                             'description': 'bad request'
                         }
                     }
                 }
             },
-            '/orders/{orderid}':{
-                get:{
-                    tags:['/orders'],
-                    summary:['add order'],
-                    parameters:[
+            '/orders/{orderid}': {
+                get: {
+                    tags: ['/orders'],
+                    summary: ['add order'],
+                    parameters: [
                         {
                             name: 'orderid',
                             in: 'path',
                             required: true,
-                            schema:{
-                                type:'string'
+                            schema: {
+                                type: 'string'
                             }
                         }
                     ],
-                    'responses':{
-                        '200':{
+                    'responses': {
+                        '200': {
                             'description': 'order wase created'
                         },
-                        '400':{
+                        '400': {
                             'description': 'bad request'
                         }
                     }
                 }
             },
-            '/orders/{orderid}/{status}':{
-                patch:{
-                    tags:['/orders'],
-                    summary:['update status for order'],
-                    parameters:[
+            '/orders/{orderid}/{status}': {
+                patch: {
+                    tags: ['/orders'],
+                    summary: ['update status for order'],
+                    parameters: [
                         {
-                            name:'orderid',
-                            in:'path',
-                            required:true,
-                            schema:{
-                                type:'number'
+                            name: 'orderid',
+                            in: 'path',
+                            required: true,
+                            schema: {
+                                type: 'number'
                             }
                         },
                         {
-                            name:'status',
-                            in:'path',
-                            required:true,
-                            schema:{
-                                type:'string'
+                            name: 'status',
+                            in: 'path',
+                            required: true,
+                            schema: {
+                                type: 'string'
                             }
                         }
                     ],
@@ -608,41 +612,41 @@ const options = {
                     //         }
                     //     }
                     // },
-                    'responses':{
-                        '200':{
-                            'description':'order update',
+                    'responses': {
+                        '200': {
+                            'description': 'order update',
                         },
-                        '400':{
-                            'description':'bad request',
+                        '400': {
+                            'description': 'bad request',
                         }
                     }
                 }
             },
-            '/orders/{status}':{
-                get:{
-                    tags:['/orders'],
-                    summary:['get all order for Status '],
-                    paramaters:[
+            '/orders/{status}': {
+                get: {
+                    tags: ['/orders'],
+                    summary: ['get all order for Status '],
+                    paramaters: [
                         {
-                            name:'status',
-                            in:'path',
-                            required:true,
-                            schema:{
-                                type:'string'
+                            name: 'status',
+                            in: 'path',
+                            required: true,
+                            schema: {
+                                type: 'string'
                             }
                         }
                     ],
-                    'responses':{
-                        '200':{
-                            'description':'you get Data'
+                    'responses': {
+                        '200': {
+                            'description': 'you get Data'
                         },
-                        '400':{
-                            'description':'bad request'
+                        '400': {
+                            'description': 'bad request'
                         }
                     }
                 }
             },
-            
+
         },
     },
     apis: [],
