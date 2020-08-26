@@ -16,7 +16,7 @@
   "dependencies": {
     "@deepstream/client": "^5.1.4",
     "@deepstream/server": "^5.1.2",
-    "bcrypt": "^5.0.0",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "deepstream.io": "^3.2.5",
     "deepstream.io-client-js": "^2.3.4",

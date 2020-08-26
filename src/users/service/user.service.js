@@ -1,6 +1,6 @@
 const  userModel = require('../schema/user.schema');
 const otpModel = require('../../otp/schema/otp.schema');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const validator = require('email-syntax-validator');
 
 module.exports = {
